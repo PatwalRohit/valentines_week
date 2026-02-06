@@ -8,16 +8,36 @@
 <style>
 body {
     margin: 0;
-    background: linear-gradient(to top, #ffe6eb, #fff);
+    background: radial-gradient(circle at top, #fff0f6, #ffe6eb);
     font-family: Arial, sans-serif;
     overflow: hidden;
     text-align: center;
 }
 
+/* Header */
 h2 {
     color: #c9184a;
     margin: 16px 0;
     font-size: 5vw;
+    transition: opacity 0.5s;
+}
+
+/* Moon */
+#moon {
+    position: absolute;
+    top: 5vh;
+    right: 10vw;
+    font-size: 18vw;
+    opacity: 0.8;
+}
+
+/* Fairy */
+#fairy {
+    position: absolute;
+    top: 10vh;
+    left: -20vw;
+    font-size: 10vw;
+    transition: left 3s ease-in-out;
 }
 
 /* Scene */
@@ -27,14 +47,16 @@ h2 {
     height: 65vh;
 }
 
-/* Characters */
+/* Girl */
 #woman {
     position: absolute;
     bottom: 8vh;
-    right: 20%;
+    right: 18%;
     font-size: 14vw;
+    z-index: 1;
 }
 
+/* Guy */
 #man {
     position: absolute;
     bottom: 8vh;
@@ -42,90 +64,138 @@ h2 {
     font-size: 14vw;
     cursor: pointer;
     transition: left 3s linear;
+    z-index: 2;
 }
 
-/* Hidden rose */
-#roseHidden {
-    font-size: 6vw;
-    display: none;
+/* Heartbeat */
+.heartbeat {
+    animation: heartbeat 1.2s infinite;
+}
+
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    30% { transform: scale(1.08); }
+    60% { transform: scale(0.95); }
+    100% { transform: scale(1); }
 }
 
 /* Message */
 #message {
     font-size: 5.5vw;
     color: #a4133c;
-    margin-top: 10px;
+    margin-top: 8px;
     padding: 0 12px;
 }
 
-/* Falling roses */
-.fallRose {
-    position: absolute;
-    top: -40px;
+/* Name container */
+#name {
+    display: flex;
+    justify-content: center;
+    gap: 1vw;
+    margin-top: 10px;
+}
+
+/* Rose letter */
+.letter {
     font-size: 7vw;
-    animation: fall linear;
+    opacity: 0;
+    animation: appear 0.6s forwards;
 }
 
-@keyframes fall {
-    to {
-        transform: translateY(110vh);
-        opacity: 0;
-    }
+@keyframes appear {
+    from { opacity: 0; transform: scale(0.3); }
+    to { opacity: 1; transform: scale(1); }
 }
 
-/* Desktop tweak */
+/* Replay */
+#replayBtn {
+    display: none;
+    margin-top: 12px;
+    padding: 10px 22px;
+    font-size: 4.5vw;
+    border: none;
+    border-radius: 20px;
+    background: #ff4d6d;
+    color: white;
+    cursor: pointer;
+}
+
+/* Desktop */
 @media (min-width: 768px) {
     h2 { font-size: 28px; }
     #man, #woman { font-size: 80px; }
     #message { font-size: 26px; }
-    .fallRose { font-size: 32px; }
+    .letter { font-size: 40px; }
 }
 </style>
 </head>
 
 <body>
 
-<h2>Tap the guy 💛</h2>
+<h2 id="header">Tap the guy 💛</h2>
+
+<div id="moon">🌕</div>
+<div id="fairy">🧚‍♀️✨</div>
 
 <div id="ground">
-    <div id="man"><span id="roseHidden">🌹</span>🚶🏻‍➡️</div>
+    <div id="man">🚶🏻‍➡️</div>
     <div id="woman">👩‍⚕️</div>
 </div>
 
 <div id="message"></div>
+<div id="name"></div>
+<button id="replayBtn" onclick="location.reload()">Replay 🔁</button>
+
+<audio id="bgMusic">
+    <source src="https://cdn.pixabay.com/audio/2023/02/14/audio_5c40c1a4f4.mp3">
+</audio>
 
 <script>
 let done = false;
 
-document.getElementById("man").addEventListener("click", () => {
+const man = document.getElementById("man");
+const header = document.getElementById("header");
+const msg = document.getElementById("message");
+const nameBox = document.getElementById("name");
+const fairy = document.getElementById("fairy");
+const music = document.getElementById("bgMusic");
+const replayBtn = document.getElementById("replayBtn");
+
+man.addEventListener("click", () => {
     if (done) return;
     done = true;
 
-    const man = document.getElementById("man");
-    const rose = document.getElementById("roseHidden");
-    const msg = document.getElementById("message");
-
-    rose.style.display = "inline";
-    man.style.left = "55%";
+    header.style.opacity = "0";
+    man.style.left = "52%";
 
     setTimeout(() => {
-        man.innerHTML = "🧎🏻‍♂️‍➡️🌹";
-        msg.innerHTML = "Happy Rose Day Niyati 🌹<br>You make my world bloom";
-        startRoseShower();
+        man.innerHTML = "🧎🏻‍♂️‍➡️ 🌹";
+        man.classList.add("heartbeat");
+
+        fairy.style.left = "30vw";
+        music.play();
+
+        msg.innerHTML = "Happy Rose Day 🌹<br>You make my world bloom";
+
+        showName();
+        replayBtn.style.display = "inline-block";
     }, 3000);
 });
 
-function startRoseShower() {
-    for (let i = 0; i < 35; i++) {
-        const r = document.createElement("div");
-        r.className = "fallRose";
-        r.innerText = "🌹";
-        r.style.left = Math.random() * 100 + "vw";
-        r.style.animationDuration = (3 + Math.random() * 2) + "s";
-        document.body.appendChild(r);
+/* Name appears letter by letter with roses */
+function showName() {
+    const letters = ["N","I","Y","A","T","I"];
+    letters.forEach((l, i) => {
+        const span = document.createElement("span");
+        span.className = "letter";
+        span.innerHTML = "🌹";
+        span.style.animationDelay = (i * 0.4) + "s";
+        nameBox.appendChild(span);
 
-        setTimeout(() => r.remove(), 5000);
-    }
+        setTimeout(() => {
+            span.innerHTML = l;
+        }, i * 400 + 300);
+    });
 }
 </script>
 
