@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Rose Day Niyati 🌹</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    margin: 0;
+    background: linear-gradient(to top, #ffe6eb, #fff);
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+    text-align: center;
+}
+
+h2 {
+    color: #c9184a;
+    margin: 16px 0;
+    font-size: 5vw;
+}
+
+/* Scene */
+#ground {
+    position: relative;
+    width: 100%;
+    height: 65vh;
+}
+
+/* Characters */
+#woman {
+    position: absolute;
+    bottom: 8vh;
+    right: 20%;
+    font-size: 14vw;
+}
+
+#man {
+    position: absolute;
+    bottom: 8vh;
+    left: 0;
+    font-size: 14vw;
+    cursor: pointer;
+    transition: left 3s linear;
+}
+
+/* Hidden rose */
+#roseHidden {
+    font-size: 6vw;
+    display: none;
+}
+
+/* Message */
+#message {
+    font-size: 5.5vw;
+    color: #a4133c;
+    margin-top: 10px;
+    padding: 0 12px;
+}
+
+/* Falling roses */
+.fallRose {
+    position: absolute;
+    top: -40px;
+    font-size: 7vw;
+    animation: fall linear;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(110vh);
+        opacity: 0;
+    }
+}
+
+/* Desktop tweak */
+@media (min-width: 768px) {
+    h2 { font-size: 28px; }
+    #man, #woman { font-size: 80px; }
+    #message { font-size: 26px; }
+    .fallRose { font-size: 32px; }
+}
+</style>
+</head>
+
+<body>
+
+<h2>Tap the guy 💛</h2>
+
+<div id="ground">
+    <div id="man"><span id="roseHidden">🌹</span>🚶🏻‍➡️</div>
+    <div id="woman">👩‍⚕️</div>
+</div>
+
+<div id="message"></div>
+
+<script>
+let done = false;
+
+document.getElementById("man").addEventListener("click", () => {
+    if (done) return;
+    done = true;
+
+    const man = document.getElementById("man");
+    const rose = document.getElementById("roseHidden");
+    const msg = document.getElementById("message");
+
+    rose.style.display = "inline";
+    man.style.left = "55%";
+
+    setTimeout(() => {
+        man.innerHTML = "🧎🏻‍♂️‍➡️🌹";
+        msg.innerHTML = "Happy Rose Day Niyati 🌹<br>You make my world bloom";
+        startRoseShower();
+    }, 3000);
+});
+
+function startRoseShower() {
+    for (let i = 0; i < 35; i++) {
+        const r = document.createElement("div");
+        r.className = "fallRose";
+        r.innerText = "🌹";
+        r.style.left = Math.random() * 100 + "vw";
+        r.style.animationDuration = (3 + Math.random() * 2) + "s";
+        document.body.appendChild(r);
+
+        setTimeout(() => r.remove(), 5000);
+    }
+}
+</script>
+
+</body>
+</html>
