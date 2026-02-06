@@ -29,14 +29,14 @@ h2 {
 #woman {
     position: absolute;
     bottom: 40px;
-    right: 15%;
+    right: 5%;
     font-size: 70px;
 }
 
 #man {
     position: absolute;
     bottom: 40px;
-    left: 5%;
+    left: 0;
     font-size: 70px;
     cursor: pointer;
     transition: left 3s linear;
@@ -92,7 +92,7 @@ document.getElementById("man").addEventListener("click", () => {
     const msg = document.getElementById("message");
 
     rose.style.display = "inline"; // rose behind back
-    man.style.left = "50%";
+    man.style.left = "45%";
 
     setTimeout(() => {
         man.innerHTML = "🧎🏻‍♂️‍➡️🌹";
