@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Rose Day Niyati 🌹</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    body {
+        margin: 0;
+        font-family: 'Comic Sans MS', cursive;
+        background: linear-gradient(to top, #ffd1dc, #fff);
+        overflow: hidden;
+        text-align: center;
+    }
+
+    h2 {
+        margin-top: 20px;
+        color: #d6336c;
+    }
+
+    #scene {
+        position: relative;
+        width: 100%;
+        height: 80vh;
+    }
+
+    #shinchan {
+        position: absolute;
+        bottom: 40px;
+        left: 50%;
+        transform: translateX(-50%) scale(0.4);
+        transition: all 2s ease;
+        cursor: pointer;
+    }
+
+    #shinchan img {
+        width: 200px;
+    }
+
+    #message {
+        font-size: 22px;
+        color: #b30047;
+        margin-top: 10px;
+    }
+
+    .close {
+        transform: translateX(-50%) scale(1);
+        bottom: 80px;
+    }
+
+    .kneel {
+        transform: translateX(-50%) scale(1) rotate(0deg);
+    }
+
+    .rose {
+        position: absolute;
+        bottom: 140px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 50px;
+        display: none;
+    }
+
+    .falling-rose {
+        position: absolute;
+        top: -50px;
+        font-size: 30px;
+        animation: fall 4s linear infinite;
+    }
+
+    @keyframes fall {
+        to {
+            transform: translateY(100vh);
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<h2>Tap Shinchan 💛</h2>
+
+<div id="scene">
+    <div id="shinchan">
+        <!-- Simple Shinchan-style cartoon -->
+        <img src="https://i.imgur.com/qIufhof.png" alt="Shinchan">
+    </div>
+
+    <div class="rose" id="rose">🌹</div>
+</div>
+
+<div id="message"></div>
+
+<script>
+let tapped = false;
+
+document.getElementById("shinchan").addEventListener("click", () => {
+    if (tapped) return;
+    tapped = true;
+
+    const shinchan = document.getElementById("shinchan");
+    const rose = document.getElementById("rose");
+    const msg = document.getElementById("message");
+
+    shinchan.classList.add("close");
+
+    setTimeout(() => {
+        rose.style.display = "block";
+        msg.innerHTML = "Happy Rose Day Niyati 🌹<br>You make every moment bloom";
+        startRoseShower();
+    }, 2000);
+});
+
+function startRoseShower() {
+    for (let i = 0; i < 20; i++) {
+        const r = document.createElement("div");
+        r.className = "falling-rose";
+        r.innerText = "🌹";
+        r.style.left = Math.random() * 100 + "vw";
+        r.style.animationDuration = (3 + Math.random() * 2) + "s";
+        document.body.appendChild(r);
+
+        setTimeout(() => r.remove(), 5000);
+    }
+}
+</script>
+
+</body>
+</html>
