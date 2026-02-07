@@ -9,22 +9,37 @@
 body{
   margin:0;
   font-family:'Segoe UI', sans-serif;
-  background:linear-gradient(#24143b,#3e2a5e,#7d6aa5);
+  background:linear-gradient(#20102f,#3b2458,#6f5fa7);
   overflow:hidden;
   text-align:center;
   color:#fff;
 }
 
+/* Stars */
+.star{
+  position:absolute;
+  color:#fff;
+  animation:twinkle 2s infinite alternate;
+}
+@keyframes twinkle{
+  from{opacity:0.3;}
+  to{opacity:1;}
+}
+
 /* Moon */
 .moon{
   position:absolute;
-  top:30px;
-  right:30px;
-  width:110px;
-  height:110px;
-  background:#f3e9ff;
+  top:25px;
+  right:25px;
+  width:120px;
+  height:120px;
+  background:#ffd966;
   border-radius:50%;
-  box-shadow:0 0 40px #e6d9ff;
+  box-shadow:0 0 40px #ffeaa7;
+  font-size:60px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
 /* Characters */
@@ -33,85 +48,104 @@ body{
   bottom:120px;
   width:100%;
 }
-
 .boy{
   position:absolute;
   left:-120px;
   font-size:80px;
   animation:walk 7s forwards;
 }
-
 .girl{
   position:absolute;
   right:40px;
   font-size:80px;
 }
-
 @keyframes walk{
   to{ left:45%; }
 }
 
-/* Diary Closed */
+/* Diary */
 .diary{
   position:absolute;
   bottom:230px;
   left:50%;
   transform:translateX(-50%);
-  font-size:60px;
+  font-size:65px;
   opacity:0;
   animation:showDiary 1s forwards;
   animation-delay:7s;
   cursor:pointer;
 }
-
 @keyframes showDiary{
   to{ opacity:1; }
 }
 
-/* Diary Open */
-.diary-open{
-  font-size:70px;
+/* Hint */
+.hint{
+  position:absolute;
+  bottom:190px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:16px;
+  color:#e6d9ff;
+  animation:pulse 1.5s infinite;
+}
+@keyframes pulse{
+  0%{opacity:0.4;}
+  50%{opacity:1;}
+  100%{opacity:0.4;}
 }
 
 /* Pages */
 .pages{
   position:absolute;
-  top:30%;
+  top:28%;
   left:50%;
   transform:translateX(-50%);
   width:85%;
-  max-width:320px;
+  max-width:340px;
   background:rgba(255,255,255,0.18);
-  border-radius:18px;
-  padding:20px;
+  border-radius:20px;
+  padding:22px;
   display:none;
   backdrop-filter:blur(8px);
 }
 
 .page{
-  opacity:0;
-  font-size:18px;
-  margin:12px 0;
-  animation:fadeIn 1s forwards;
-}
-
-@keyframes fadeIn{
-  to{ opacity:1; }
+  font-size:20px;
+  font-weight:700;
+  color:#e6d9ff;
+  text-shadow:0 0 12px #cbb3ff;
+  display:none;
 }
 
 /* Proposal */
 .proposal{
-  font-size:22px;
+  font-size:24px;
+  font-weight:800;
   margin-top:15px;
-  color:#f5e9ff;
-  text-shadow:0 0 15px #d9c7ff;
+  color:#f0e6ff;
+  text-shadow:0 0 18px #d6c7ff;
+}
+
+/* Flip Hint */
+.flip-hint{
+  margin-top:10px;
+  font-size:14px;
+  color:#f3e9ff;
 }
 </style>
 </head>
 
 <body>
 
-<div class="moon"></div>
+<!-- Stars -->
+<div class="star" style="top:10%; left:15%;">⭐</div>
+<div class="star" style="top:20%; left:60%;">✨</div>
+<div class="star" style="top:35%; left:30%;">⭐</div>
+<div class="star" style="top:15%; left:80%;">✨</div>
+
+<!-- Moon -->
+<div class="moon">😊</div>
 
 <div class="scene">
   <div class="boy">🧑‍🦱</div>
@@ -119,12 +153,14 @@ body{
 </div>
 
 <div class="diary" id="diary" onclick="openDiary()">📔</div>
+<div class="hint" id="hint">Tap the diary 📔</div>
 
-<div class="pages" id="pages">
+<div class="pages" id="pages" onclick="flipPage()">
   <div class="page" id="p1">✨ Some feelings are written softly…</div>
   <div class="page" id="p2">🌙 Some wishes glow like the moon…</div>
-  <div class="page" id="p3">🪽 And some moments feel magical…</div>
+  <div class="page" id="p3">🪽 Some moments feel magical…</div>
   <div class="proposal" id="final"></div>
+  <div class="flip-hint" id="flipHint">Tap to flip page 👉</div>
 </div>
 
 <audio id="bgm" loop>
@@ -132,18 +168,26 @@ body{
 </audio>
 
 <script>
+let page = 0;
 let text = "Will you be my forever?";
 let i = 0;
 
 function openDiary(){
-  document.getElementById("diary").innerHTML = "📖";
-  document.getElementById("pages").style.display = "block";
+  document.getElementById("diary").innerHTML="📖";
+  document.getElementById("pages").style.display="block";
+  document.getElementById("hint").style.display="none";
   document.getElementById("bgm").play();
+}
 
-  setTimeout(()=>document.getElementById("p1").style.animationDelay="0s",200);
-  setTimeout(()=>document.getElementById("p2").style.animationDelay="0s",1200);
-  setTimeout(()=>document.getElementById("p3").style.animationDelay="0s",2200);
-  setTimeout(typeText,3200);
+function flipPage(){
+  page++;
+  if(page===1) document.getElementById("p1").style.display="block";
+  if(page===2) document.getElementById("p2").style.display="block";
+  if(page===3) document.getElementById("p3").style.display="block";
+  if(page===4){
+    document.getElementById("flipHint").style.display="none";
+    typeText();
+  }
 }
 
 function typeText(){
