@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Propose Day</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  font-family:'Segoe UI', sans-serif;
+  background:linear-gradient(#2a1b3d,#3e2a5e,#6b5b95);
+  overflow:hidden;
+  text-align:center;
+  color:#fff;
+}
+
+/* Moon */
+.moon{
+  position:absolute;
+  top:30px;
+  right:40px;
+  width:120px;
+  height:120px;
+  background:#f3e9ff;
+  border-radius:50%;
+  box-shadow:0 0 40px #e6d9ff;
+}
+
+/* Characters */
+.scene{
+  position:absolute;
+  bottom:120px;
+  width:100%;
+}
+
+.boy{
+  position:absolute;
+  left:-120px;
+  font-size:80px;
+  animation:walk 8s forwards;
+}
+
+.girl{
+  position:absolute;
+  right:40px;
+  font-size:80px;
+}
+
+@keyframes walk{
+  to{ left:45%; }
+}
+
+/* Diary */
+.diary{
+  position:absolute;
+  bottom:220px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:60px;
+  opacity:0;
+  animation:showDiary 1s forwards;
+  animation-delay:8s;
+  cursor:pointer;
+}
+
+@keyframes showDiary{
+  to{ opacity:1; }
+}
+
+/* Message Box */
+.message{
+  position:absolute;
+  top:30%;
+  left:50%;
+  transform:translateX(-50%);
+  background:rgba(255,255,255,0.15);
+  padding:20px 30px;
+  border-radius:20px;
+  width:80%;
+  max-width:320px;
+  display:none;
+  backdrop-filter:blur(6px);
+}
+
+/* Angel Wings */
+.wings{
+  font-size:60px;
+  margin-bottom:10px;
+}
+
+/* Lavender Glow */
+.glow{
+  animation:glow 2s infinite alternate;
+}
+
+@keyframes glow{
+  from{ text-shadow:0 0 10px #cbb3ff; }
+  to{ text-shadow:0 0 25px #f3e9ff; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="moon"></div>
+
+<div class="scene">
+  <div class="boy">🧑‍🦱</div>
+  <div class="girl">👸</div>
+</div>
+
+<div class="diary" onclick="openDiary()">📔</div>
+
+<div class="message" id="msg">
+  <div class="wings">🪽🌙🪽</div>
+  <div id="text" class="glow"></div>
+</div>
+
+<audio id="bgm" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/10/26/audio_6fd5bfe4d3.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const text = "Will you be my forever?";
+let i = 0;
+
+function openDiary(){
+  document.getElementById("msg").style.display="block";
+  document.getElementById("bgm").play();
+  typeText();
+}
+
+function typeText(){
+  if(i < text.length){
+    document.getElementById("text").innerHTML += text.charAt(i);
+    i++;
+    setTimeout(typeText, 90);
+  }
+}
+</script>
+
+</body>
+</html>
