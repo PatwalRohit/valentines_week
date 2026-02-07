@@ -9,7 +9,7 @@
 body{
   margin:0;
   font-family:'Segoe UI', sans-serif;
-  background:linear-gradient(#2a1b3d,#3e2a5e,#6b5b95);
+  background:linear-gradient(#24143b,#3e2a5e,#7d6aa5);
   overflow:hidden;
   text-align:center;
   color:#fff;
@@ -19,9 +19,9 @@ body{
 .moon{
   position:absolute;
   top:30px;
-  right:40px;
-  width:120px;
-  height:120px;
+  right:30px;
+  width:110px;
+  height:110px;
   background:#f3e9ff;
   border-radius:50%;
   box-shadow:0 0 40px #e6d9ff;
@@ -38,7 +38,7 @@ body{
   position:absolute;
   left:-120px;
   font-size:80px;
-  animation:walk 8s forwards;
+  animation:walk 7s forwards;
 }
 
 .girl{
@@ -51,16 +51,16 @@ body{
   to{ left:45%; }
 }
 
-/* Diary */
+/* Diary Closed */
 .diary{
   position:absolute;
-  bottom:220px;
+  bottom:230px;
   left:50%;
   transform:translateX(-50%);
   font-size:60px;
   opacity:0;
   animation:showDiary 1s forwards;
-  animation-delay:8s;
+  animation-delay:7s;
   cursor:pointer;
 }
 
@@ -68,35 +68,43 @@ body{
   to{ opacity:1; }
 }
 
-/* Message Box */
-.message{
+/* Diary Open */
+.diary-open{
+  font-size:70px;
+}
+
+/* Pages */
+.pages{
   position:absolute;
   top:30%;
   left:50%;
   transform:translateX(-50%);
-  background:rgba(255,255,255,0.15);
-  padding:20px 30px;
-  border-radius:20px;
-  width:80%;
+  width:85%;
   max-width:320px;
+  background:rgba(255,255,255,0.18);
+  border-radius:18px;
+  padding:20px;
   display:none;
-  backdrop-filter:blur(6px);
+  backdrop-filter:blur(8px);
 }
 
-/* Angel Wings */
-.wings{
-  font-size:60px;
-  margin-bottom:10px;
+.page{
+  opacity:0;
+  font-size:18px;
+  margin:12px 0;
+  animation:fadeIn 1s forwards;
 }
 
-/* Lavender Glow */
-.glow{
-  animation:glow 2s infinite alternate;
+@keyframes fadeIn{
+  to{ opacity:1; }
 }
 
-@keyframes glow{
-  from{ text-shadow:0 0 10px #cbb3ff; }
-  to{ text-shadow:0 0 25px #f3e9ff; }
+/* Proposal */
+.proposal{
+  font-size:22px;
+  margin-top:15px;
+  color:#f5e9ff;
+  text-shadow:0 0 15px #d9c7ff;
 }
 </style>
 </head>
@@ -110,11 +118,13 @@ body{
   <div class="girl">👸</div>
 </div>
 
-<div class="diary" onclick="openDiary()">📔</div>
+<div class="diary" id="diary" onclick="openDiary()">📔</div>
 
-<div class="message" id="msg">
-  <div class="wings">🪽🌙🪽</div>
-  <div id="text" class="glow"></div>
+<div class="pages" id="pages">
+  <div class="page" id="p1">✨ Some feelings are written softly…</div>
+  <div class="page" id="p2">🌙 Some wishes glow like the moon…</div>
+  <div class="page" id="p3">🪽 And some moments feel magical…</div>
+  <div class="proposal" id="final"></div>
 </div>
 
 <audio id="bgm" loop>
@@ -122,20 +132,25 @@ body{
 </audio>
 
 <script>
-const text = "Will you be my forever?";
+let text = "Will you be my forever?";
 let i = 0;
 
 function openDiary(){
-  document.getElementById("msg").style.display="block";
+  document.getElementById("diary").innerHTML = "📖";
+  document.getElementById("pages").style.display = "block";
   document.getElementById("bgm").play();
-  typeText();
+
+  setTimeout(()=>document.getElementById("p1").style.animationDelay="0s",200);
+  setTimeout(()=>document.getElementById("p2").style.animationDelay="0s",1200);
+  setTimeout(()=>document.getElementById("p3").style.animationDelay="0s",2200);
+  setTimeout(typeText,3200);
 }
 
 function typeText(){
   if(i < text.length){
-    document.getElementById("text").innerHTML += text.charAt(i);
+    document.getElementById("final").innerHTML += text.charAt(i);
     i++;
-    setTimeout(typeText, 90);
+    setTimeout(typeText,90);
   }
 }
 </script>
