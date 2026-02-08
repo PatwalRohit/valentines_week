@@ -111,7 +111,7 @@ button {
     from { box-shadow: 0 0 20px #fff; }
     to { box-shadow: 0 0 60px #fff; }
 }
-    #soundUnlock {
+   #soundUnlock {
     position: fixed;
     inset: 0;
     background: linear-gradient(to top, #0f2027, #203a43);
@@ -121,12 +121,15 @@ button {
     justify-content: center;
     z-index: 9999;
     text-align: center;
+
+    /* 🔴 CRITICAL FOR iOS */
+    pointer-events: auto;
+    touch-action: manipulation;
 }
 
 .unlockMoon {
     font-size: 80px;
     animation: floatMoon 2.5s ease-in-out infinite;
-    cursor: pointer;
     text-shadow: 0 0 30px #fff;
 }
 
@@ -145,14 +148,15 @@ button {
 </head>
 
 <body>
-    <!-- 🎵 Romantic Music -->
-<audio id="bgMusic" loop playsinline>
-    <source src="https://cdn.pixabay.com/audio/2023/03/06/audio_5c1c6e98e0.mp3" type="audio/mpeg">
-</audio>
-<div id="soundUnlock">
+    <div id="soundUnlock">
     <div class="unlockMoon">🌙</div>
     <p>Touch the moon to begin ✨</p>
 </div>
+    <!-- 🎵 Romantic Music -->
+<audio id="bgMusic" loop playsinline preload="auto">
+    <source src="https://cdn.pixabay.com/audio/2023/03/06/audio_5c1c6e98e0.mp3" type="audio/mpeg">
+</audio>
+
 
 
 <div class="container" id="questionBox">
@@ -172,21 +176,26 @@ button {
     const music = document.getElementById("bgMusic");
 const soundUnlock = document.getElementById("soundUnlock");
 
-soundUnlock.addEventListener("click", () => {
-    // Try to unlock audio
+/* Unlock audio on FIRST TAP ANYWHERE */
+soundUnlock.addEventListener("touchstart", unlockAudio, { once: true });
+soundUnlock.addEventListener("click", unlockAudio, { once: true });
+
+function unlockAudio() {
+    // Always remove overlay immediately
+    soundUnlock.style.display = "none";
+
+    // Try unlocking audio (best effort)
     try {
         music.muted = true;
         music.play();
         setTimeout(() => {
             music.pause();
             music.muted = false;
-            soundUnlock.style.display = "none";
-        }, 300);
+        }, 200);
     } catch (e) {
-        // Even if audio fails, NEVER block the game
-        soundUnlock.style.display = "none";
+        // Do nothing — never block UI
     }
-});
+}
     
 const noBtn = document.getElementById("noBtn");
 const yesBtn = document.getElementById("yesBtn");
