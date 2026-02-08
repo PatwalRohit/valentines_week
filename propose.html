@@ -117,7 +117,7 @@ button {
 <body>
 
 <!-- 🎵 Romantic Music -->
-<audio id="bgMusic" loop>
+<audio id="bgMusic" loop preload="auto">
     <source src="https://cdn.pixabay.com/audio/2023/03/06/audio_5c1c6e98e0.mp3" type="audio/mpeg">
 </audio>
 
@@ -157,7 +157,20 @@ noBtn.addEventListener("click", moveNo);
 yesBtn.addEventListener("click", () => {
     questionBox.style.display = "none";
     celebration.style.display = "block";
-    music.play();
+
+    music.volume = 0.8;
+    music.load();
+
+    const playPromise = music.play();
+    if (playPromise !== undefined) {
+        playPromise.catch(() => {
+            // iOS fallback: play on next user tap
+            document.body.addEventListener("touchstart", () => {
+                music.play();
+            }, { once: true });
+        });
+    }
+
     startMagic();
 });
 
