@@ -111,13 +111,46 @@ button {
     from { box-shadow: 0 0 20px #fff; }
     to { box-shadow: 0 0 60px #fff; }
 }
+    #soundUnlock {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(to top, #0f2027, #203a43);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    text-align: center;
+}
+
+.unlockMoon {
+    font-size: 80px;
+    animation: floatMoon 2.5s ease-in-out infinite;
+    cursor: pointer;
+    text-shadow: 0 0 30px #fff;
+}
+
+@keyframes floatMoon {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+    100% { transform: translateY(0); }
+}
+
+#soundUnlock p {
+    margin-top: 15px;
+    font-size: 18px;
+    opacity: 0.9;
+}
 </style>
 </head>
 
 <body>
-
+<div id="soundUnlock">
+    <div class="unlockMoon">🌙</div>
+    <p>Touch the moon to begin ✨</p>
+</div>
 <!-- 🎵 Romantic Music -->
-<audio id="bgMusic" loop preload="auto">
+<audio id="bgMusic" loop playsinline>
     <source src="https://cdn.pixabay.com/audio/2023/03/06/audio_5c1c6e98e0.mp3" type="audio/mpeg">
 </audio>
 
@@ -135,6 +168,17 @@ button {
 </div>
 
 <script>
+    const soundUnlock = document.getElementById("soundUnlock");
+
+soundUnlock.addEventListener("click", () => {
+    music.muted = true;
+    music.play().then(() => {
+        music.pause();
+        music.muted = false;
+        soundUnlock.style.display = "none";
+    });
+});
+    
 const noBtn = document.getElementById("noBtn");
 const yesBtn = document.getElementById("yesBtn");
 const celebration = document.getElementById("celebration");
@@ -157,20 +201,7 @@ noBtn.addEventListener("click", moveNo);
 yesBtn.addEventListener("click", () => {
     questionBox.style.display = "none";
     celebration.style.display = "block";
-
-    music.volume = 0.8;
-    music.load();
-
-    const playPromise = music.play();
-    if (playPromise !== undefined) {
-        playPromise.catch(() => {
-            // iOS fallback: play on next user tap
-            document.body.addEventListener("touchstart", () => {
-                music.play();
-            }, { once: true });
-        });
-    }
-
+    music.play();
     startMagic();
 });
 
