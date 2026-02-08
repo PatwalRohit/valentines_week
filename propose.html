@@ -145,14 +145,15 @@ button {
 </head>
 
 <body>
+    <!-- 🎵 Romantic Music -->
+<audio id="bgMusic" loop playsinline>
+    <source src="https://cdn.pixabay.com/audio/2023/03/06/audio_5c1c6e98e0.mp3" type="audio/mpeg">
+</audio>
 <div id="soundUnlock">
     <div class="unlockMoon">🌙</div>
     <p>Touch the moon to begin ✨</p>
 </div>
-<!-- 🎵 Romantic Music -->
-<audio id="bgMusic" loop playsinline>
-    <source src="https://cdn.pixabay.com/audio/2023/03/06/audio_5c1c6e98e0.mp3" type="audio/mpeg">
-</audio>
+
 
 <div class="container" id="questionBox">
     <h1>Will you be mine forever? 💖</h1>
@@ -168,15 +169,23 @@ button {
 </div>
 
 <script>
-    const soundUnlock = document.getElementById("soundUnlock");
+    const music = document.getElementById("bgMusic");
+const soundUnlock = document.getElementById("soundUnlock");
 
 soundUnlock.addEventListener("click", () => {
-    music.muted = true;
-    music.play().then(() => {
-        music.pause();
-        music.muted = false;
+    // Try to unlock audio
+    try {
+        music.muted = true;
+        music.play();
+        setTimeout(() => {
+            music.pause();
+            music.muted = false;
+            soundUnlock.style.display = "none";
+        }, 300);
+    } catch (e) {
+        // Even if audio fails, NEVER block the game
         soundUnlock.style.display = "none";
-    });
+    }
 });
     
 const noBtn = document.getElementById("noBtn");
