@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forever Proposal</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(to top, #0f2027, #203a43, #2c5364);
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+/* ===== SOUND UNLOCK OVERLAY ===== */
+#soundUnlock {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(to top, #0f2027, #203a43);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    text-align: center;
+}
+
+.unlockMoon {
+    font-size: 80px;
+    animation: floatMoon 2.5s ease-in-out infinite;
+    text-shadow: 0 0 30px #fff;
+}
+
+@keyframes floatMoon {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+    100% { transform: translateY(0); }
+}
+
+#soundUnlock p {
+    margin-top: 15px;
+    font-size: 18px;
+    opacity: 0.9;
+}
+
+/* ===== GAME ===== */
+.container {
+    text-align: center;
+    width: 100%;
+    max-width: 350px;
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 25px;
+    text-shadow: 0 0 15px pink;
+}
+
+.buttons {
+    position: relative;
+    height: 180px;
+    width: 100%;
+}
+
+button {
+    padding: 14px 28px;
+    font-size: 17px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+}
+
+#yesBtn {
+    background: #ff4d6d;
+    color: white;
+    left: 50%;
+    bottom: 20px;
+    transform: translateX(-50%);
+}
+
+#noBtn {
+    background: #555;
+    color: white;
+    top: 20px;
+    left: 20px;
+}
+
+/* ===== CELEBRATION ===== */
+#celebration {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle, #1a2a6c, #b21f1f, #fdbb2d);
+    text-align: center;
+    overflow: hidden;
+}
+
+#celebration h2 {
+    margin-top: 90px;
+    font-size: 30px;
+    animation: pop 1.2s ease infinite alternate;
+}
+
+@keyframes pop {
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
+}
+
+.rose, .star, .fairy {
+    position: absolute;
+    animation: float 6s linear infinite;
+}
+
+@keyframes float {
+    from { transform: translateY(100vh); opacity: 1; }
+    to { transform: translateY(-120vh); opacity: 0; }
+}
+
+.moon {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    width: 80px;
+    height: 80px;
+    background: #ffd966;
+    border-radius: 50%;
+    box-shadow: 0 0 40px #fff;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🔓 SOUND UNLOCK (INLINE CLICK = SAFEST) -->
+<div id="soundUnlock" onclick="unlockSound()">
+    <div class="unlockMoon">🌙</div>
+    <p>Touch the moon to begin ✨</p>
+</div>
+
+<!-- 🎵 AUDIO -->
+<audio id="bgMusic" loop playsinline preload="auto">
+    <source src="https://cdn.pixabay.com/audio/2023/03/06/audio_5c1c6e98e0.mp3" type="audio/mpeg">
+</audio>
+
+<!-- 💖 GAME -->
+<div class="container" id="questionBox">
+    <h1>Will you be mine forever? 💖</h1>
+    <div class="buttons">
+        <button id="noBtn">NO 🙈</button>
+        <button id="yesBtn">YES 💕</button>
+    </div>
+</div>
+
+<div id="celebration">
+    <div class="moon"></div>
+    <h2>I love you Niyati 💖✨</h2>
+</div>
+
+<script>
+const music = document.getElementById("bgMusic");
+const soundUnlock = document.getElementById("soundUnlock");
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const celebration = document.getElementById("celebration");
+const questionBox = document.getElementById("questionBox");
+const btnBox = document.querySelector(".buttons");
+
+/* 🔓 AUDIO UNLOCK — INLINE, BULLETPROOF */
+function unlockSound() {
+    soundUnlock.style.display = "none";
+    try {
+        music.muted = true;
+        music.play();
+        setTimeout(() => {
+            music.pause();
+            music.muted = false;
+        }, 200);
+    } catch (e) {}
+}
+
+/* NO BUTTON RUNS */
+function moveNo() {
+    const maxX = btnBox.clientWidth - noBtn.offsetWidth;
+    const maxY = btnBox.clientHeight - noBtn.offsetHeight;
+    noBtn.style.left = Math.random() * maxX + "px";
+    noBtn.style.top = Math.random() * maxY + "px";
+}
+
+noBtn.onclick = moveNo;
+noBtn.ontouchstart = moveNo;
+
+/* YES CLICK */
+yesBtn.onclick = () => {
+    questionBox.style.display = "none";
+    celebration.style.display = "block";
+    music.play();
+    startMagic();
+};
+
+function startMagic() {
+    for (let i = 0; i < 25; i++) createEl("🌹", "rose");
+    for (let i = 0; i < 20; i++) createEl("⭐", "star");
+    for (let i = 0; i < 12; i++) createEl("🧚‍♀️", "fairy");
+}
+
+function createEl(symbol, cls) {
+    const el = document.createElement("div");
+    el.innerHTML = symbol;
+    el.className = cls;
+    el.style.left = Math.random() * 100 + "vw";
+    el.style.fontSize = (20 + Math.random() * 30) + "px";
+    el.style.animationDuration = (4 + Math.random() * 4) + "s";
+    celebration.appendChild(el);
+}
+</script>
+
+</body>
+</html>
