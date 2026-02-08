@@ -23,7 +23,7 @@ body {
     overflow: hidden;
 }
 
-/* 🌙 Moon glow */
+/* 🌙 Moon */
 .moon {
     position: fixed;
     top: 20px;
@@ -42,7 +42,22 @@ body {
     100% { box-shadow: 0 0 20px #fff; }
 }
 
+/* 🌙 Moon reaction */
+.moon.react {
+    animation: moonPulse 0.8s ease;
+}
+
+@keyframes moonPulse {
+    0% { transform: scale(1); box-shadow: 0 0 20px #fff; }
+    50% { transform: scale(1.15); box-shadow: 0 0 60px #fff; }
+    100% { transform: scale(1); box-shadow: 0 0 25px #fff; }
+}
+
 /* 📖 Diary */
+#diaryContainer {
+    text-align: center;
+}
+
 #diary {
     width: 260px;
     height: 320px;
@@ -59,7 +74,7 @@ body {
     perspective: 800px;
 }
 
-/* Page flip */
+/* Flip */
 .flip {
     animation: flip 0.6s ease;
 }
@@ -68,6 +83,19 @@ body {
     0% { transform: rotateY(0); }
     50% { transform: rotateY(90deg); }
     100% { transform: rotateY(0); }
+}
+
+/* 🔔 Hint */
+#hint {
+    margin-top: 12px;
+    font-size: 14px;
+    opacity: 0.8;
+    animation: blink 1.6s ease-in-out infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
 }
 
 /* 🌸 Flowers */
@@ -85,20 +113,28 @@ body {
     }
 }
 
-/* 🎉 Final screen */
+/* 🎉 Final */
 #final {
     display: none;
     text-align: center;
 }
 
+/* 🥣 Rasmalai glow */
 .rasmalai {
     font-size: 80px;
     margin-bottom: 10px;
+    animation: rasGlow 3s ease-in-out infinite;
+}
+
+@keyframes rasGlow {
+    0% { text-shadow: 0 0 10px #fff3c4; }
+    50% { text-shadow: 0 0 35px #fff3c4, 0 0 55px #ffe9a7; }
+    100% { text-shadow: 0 0 10px #fff3c4; }
 }
 
 button {
     margin-top: 20px;
-    padding: 10px 20px;
+    padding: 10px 22px;
     border: none;
     border-radius: 20px;
     background: #ffe9a7;
@@ -113,23 +149,22 @@ button {
 
 <div class="moon"></div>
 
-<div id="diary">Tap the diary 🌸</div>
+<div id="diaryContainer">
+    <div id="diary">Tap the diary 🌸</div>
+    <div id="hint">Tap to flip pages 📖</div>
+</div>
 
 <div id="final">
     <div class="rasmalai">🥣✨</div>
     <h2>Happy Chocolate Day, Niyati 💛</h2>
     <p>
         I know chocolates aren’t for you…<br>
-        so I chose something sweeter.<br><br>
-        Just like you 🌙
+        so I brought something sweeter — <b>Rasmalai</b> 🤍<br><br>
+        Soft, comforting,<br>
+        and my favourite sweetness… you 🌙
     </p>
     <button onclick="replay()">Replay 💫</button>
 </div>
-
-<!-- 🎶 Soft instrumental -->
-<audio id="music" loop preload="auto">
-    <source src="https://cdn.pixabay.com/audio/2022/10/30/audio_2f8cddc6a6.mp3" type="audio/mpeg">
-</audio>
 
 <script>
 const pages = [
@@ -141,18 +176,18 @@ const pages = [
 ];
 
 let index = 0;
+
 const diary = document.getElementById("diary");
 const final = document.getElementById("final");
-const music = document.getElementById("music");
+const moon = document.querySelector(".moon");
 
 diary.onclick = function () {
 
-    // 🎶 unlock music on FIRST user tap (iOS-safe)
-    if (music.paused) {
-        music.volume = 0.4;
-        music.play().catch(() => {});
-    }
+    // 🌙 Moon reacts
+    moon.classList.add("react");
+    setTimeout(() => moon.classList.remove("react"), 800);
 
+    // 📖 Page flip
     diary.classList.add("flip");
 
     setTimeout(() => {
@@ -162,7 +197,7 @@ diary.onclick = function () {
         if (index < pages.length) {
             diary.innerHTML = pages[index];
         } else {
-            diary.style.display = "none";
+            document.getElementById("diaryContainer").style.display = "none";
             final.style.display = "block";
             startFlowers();
         }
@@ -183,7 +218,7 @@ function startFlowers() {
 function replay() {
     index = 0;
     final.style.display = "none";
-    diary.style.display = "flex";
+    document.getElementById("diaryContainer").style.display = "block";
     diary.innerHTML = "Tap the diary 🌸";
     document.querySelectorAll(".flower").forEach(f => f.remove());
 }
