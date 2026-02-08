@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Will You Be Mine Forever?</title>
+<title>Forever Proposal</title>
 
 <style>
 body {
@@ -20,12 +20,13 @@ body {
 
 .container {
     text-align: center;
-    padding: 20px;
+    width: 100%;
+    max-width: 350px;
 }
 
 h1 {
-    font-size: 26px;
-    margin-bottom: 30px;
+    font-size: 24px;
+    margin-bottom: 25px;
     animation: glow 2s infinite alternate;
 }
 
@@ -34,14 +35,16 @@ h1 {
     to { text-shadow: 0 0 25px #ff69b4; }
 }
 
+/* BUTTON AREA */
 .buttons {
     position: relative;
-    height: 200px;
+    height: 180px;
+    width: 100%;
 }
 
 button {
-    padding: 15px 30px;
-    font-size: 18px;
+    padding: 14px 28px;
+    font-size: 17px;
     border-radius: 30px;
     border: none;
     cursor: pointer;
@@ -52,16 +55,18 @@ button {
     background: #ff4d6d;
     color: white;
     left: 50%;
+    bottom: 20px;
     transform: translateX(-50%);
 }
 
 #noBtn {
-    background: #444;
+    background: #555;
     color: white;
-    left: 30%;
+    top: 20px;
+    left: 20px;
 }
 
-/* Celebration */
+/* CELEBRATION */
 #celebration {
     display: none;
     position: fixed;
@@ -72,8 +77,8 @@ button {
 }
 
 #celebration h2 {
-    margin-top: 80px;
-    font-size: 32px;
+    margin-top: 90px;
+    font-size: 30px;
     animation: pop 1.2s ease infinite alternate;
 }
 
@@ -82,7 +87,7 @@ button {
     to { transform: scale(1.1); }
 }
 
-/* Floating elements */
+/* FLOATING MAGIC */
 .rose, .star, .fairy {
     position: absolute;
     animation: float 6s linear infinite;
@@ -93,13 +98,13 @@ button {
     to { transform: translateY(-120vh); opacity: 0; }
 }
 
-/* Moon */
+/* MOON */
 .moon {
     position: absolute;
-    top: 30px;
-    right: 30px;
-    width: 90px;
-    height: 90px;
+    top: 25px;
+    right: 25px;
+    width: 80px;
+    height: 80px;
     background: #ffd966;
     border-radius: 50%;
     box-shadow: 0 0 40px #fff;
@@ -110,20 +115,6 @@ button {
     from { box-shadow: 0 0 20px #fff; }
     to { box-shadow: 0 0 60px #fff; }
 }
-
-/* Claps text */
-.claps {
-    position: absolute;
-    bottom: 40px;
-    width: 100%;
-    font-size: 22px;
-    animation: clap 1s infinite alternate;
-}
-
-@keyframes clap {
-    from { opacity: 0.5; }
-    to { opacity: 1; }
-}
 </style>
 </head>
 
@@ -132,15 +123,14 @@ button {
 <div class="container" id="questionBox">
     <h1>Will you be mine forever? 💖</h1>
     <div class="buttons">
-        <button id="yesBtn">YES 💕</button>
         <button id="noBtn">NO 🙈</button>
+        <button id="yesBtn">YES 💕</button>
     </div>
 </div>
 
 <div id="celebration">
     <div class="moon"></div>
     <h2>I love you Niyati 💖✨</h2>
-    <div class="claps">👏👏 Everyone is clapping for us 👏👏</div>
 </div>
 
 <script>
@@ -148,19 +138,28 @@ const noBtn = document.getElementById("noBtn");
 const yesBtn = document.getElementById("yesBtn");
 const celebration = document.getElementById("celebration");
 const questionBox = document.getElementById("questionBox");
+const btnBox = document.querySelector(".buttons");
 
-// NO button runs away 😈
-noBtn.addEventListener("mouseenter", moveNo);
-noBtn.addEventListener("click", moveNo);
-
+// MOBILE-FRIENDLY NO BUTTON ESCAPE 😈
 function moveNo() {
-    const x = Math.random() * 70;
-    const y = Math.random() * 70;
-    noBtn.style.left = x + "%";
-    noBtn.style.top = y + "%";
+    const boxRect = btnBox.getBoundingClientRect();
+    const btnRect = noBtn.getBoundingClientRect();
+
+    const maxX = boxRect.width - btnRect.width;
+    const maxY = boxRect.height - btnRect.height;
+
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
 }
 
-// YES clicked 💍
+// Trigger on touch + click
+noBtn.addEventListener("touchstart", moveNo);
+noBtn.addEventListener("click", moveNo);
+
+// YES CLICK 💍
 yesBtn.addEventListener("click", () => {
     questionBox.style.display = "none";
     celebration.style.display = "block";
@@ -168,18 +167,9 @@ yesBtn.addEventListener("click", () => {
 });
 
 function startMagic() {
-    // Roses
-    for (let i = 0; i < 25; i++) {
-        createElement("🌹", "rose");
-    }
-    // Stars
-    for (let i = 0; i < 20; i++) {
-        createElement("⭐", "star");
-    }
-    // Fairies (Rapunzel vibe)
-    for (let i = 0; i < 12; i++) {
-        createElement("🧚‍♀️", "fairy");
-    }
+    for (let i = 0; i < 25; i++) createElement("🌹", "rose");
+    for (let i = 0; i < 20; i++) createElement("⭐", "star");
+    for (let i = 0; i < 12; i++) createElement("🧚‍♀️", "fairy");
 }
 
 function createElement(symbol, className) {
