@@ -1,47 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Teddy Day</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Happy Teddy Day Niyati</title>
 
 <style>
-body{
+html,body{
   margin:0;
+  padding:0;
+  width:100%;
+  height:100%;
   overflow:hidden;
-  background:radial-gradient(circle at top,#1b1b3a,#000);
-  font-family:sans-serif;
-  color:white;
+  font-family:'Segoe UI',sans-serif;
+  background:radial-gradient(circle at top,#1a1f4d,#070b25);
 }
 
 /* Moon */
 #moon{
   position:absolute;
-  top:30px;
-  right:30px;
-  width:80px;
-  height:80px;
+  top:40px;
+  right:40px;
+  width:110px;
+  height:110px;
+  background:#ffd86b;
   border-radius:50%;
-  background:#ffd966;
-  box-shadow:0 0 20px #ffd966;
+  box-shadow:0 0 20px rgba(255,216,107,0.4);
+  transition:all 1s ease;
 }
-
-/* Text */
-#text{
-  position:absolute;
-  top:15%;
-  width:100%;
-  text-align:center;
-  font-size:20px;
-}
-#final{
-  position:absolute;
-  top:40%;
-  width:100%;
-  text-align:center;
-  font-size:26px;
-  display:none;
-  color:pink;
+.moonGlow{
+  box-shadow:0 0 50px rgba(255,216,107,1);
+  transform:scale(1.12);
 }
 
 /* Scene */
@@ -49,126 +38,174 @@ body{
   position:absolute;
   bottom:40px;
   width:100%;
-  height:220px;
+  height:320px;
 }
 
-/* TEDDY (circle body) */
+/* Teddy */
 #teddy{
   position:absolute;
-  left:40px;
+  left:8%;
   bottom:0;
-  width:100px;
-  height:120px;
-  background:#c98c4a;
-  border-radius:50% 50% 40% 40%;
-  cursor:pointer;
+  width:140px;
+  transition:transform 3s ease;
 }
+.walk{ transform:translateX(230px); }
+.hug{ transform:translateX(270px) scale(1.05) rotate(-6deg); }
 
-/* Teddy head */
-#teddy:before{
-  content:"";
-  position:absolute;
-  top:-50px;
-  left:10px;
-  width:80px;
-  height:80px;
-  background:#c98c4a;
-  border-radius:50%;
-}
-
-/* GIRL */
+/* Girl */
 #girl{
   position:absolute;
-  right:40px;
+  right:8%;
   bottom:0;
-  width:80px;
-  height:120px;
-  background:#ffb6c1;
-  border-radius:40% 40% 20% 20%;
+  width:120px;
+  transition:transform 3s ease;
+}
+.step{ transform:translateX(-90px); }
+.girlHug{ transform:translateX(-130px) scale(1.05); }
+
+/* Blink */
+@keyframes blink{
+  0%,90%,100%{transform:scaleY(1)}
+  95%{transform:scaleY(0.1)}
+}
+.eye{
+  transform-origin:center;
+  animation:blink 5s infinite;
 }
 
 /* Blush */
-.blush{
+.blush{opacity:1!important}
+
+/* Name */
+#name{
   position:absolute;
-  width:16px;
-  height:8px;
-  background:pink;
-  border-radius:50%;
+  left:50%;
+  bottom:170px;
+  transform:translateX(-50%);
+  font-size:28px;
+  color:#ffd6f0;
   opacity:0;
+  transition:opacity 1.5s ease;
+  text-shadow:0 0 10px rgba(255,214,240,0.9);
 }
-#teddyBlush{ left:30px; top:20px; }
-#girlBlush{ right:55px; top:30px; }
+.showName{opacity:1}
+
+/* Hearts */
+.heart{
+  position:absolute;
+  bottom:120px;
+  left:50%;
+  font-size:20px;
+  opacity:0;
+  animation:float 3s ease forwards;
+}
+@keyframes float{
+  0%{transform:translate(-50%,0) scale(0.6);opacity:1}
+  100%{transform:translate(-50%,-120px) scale(1.3);opacity:0}
+}
+
+/* Tap hint */
+#tap{
+  position:absolute;
+  bottom:20px;
+  width:100%;
+  text-align:center;
+  color:#ccc;
+  font-size:14px;
+}
 </style>
 </head>
 
 <body>
 
 <div id="moon"></div>
-<div id="text">Tap the teddy 🧸</div>
-<div id="final">Happy Teddy Day, <b>Niyati</b> 🤍</div>
 
 <div id="scene">
-  <div id="teddy">
-    <div id="teddyBlush" class="blush"></div>
-  </div>
-  <div id="girl">
-    <div id="girlBlush" class="blush"></div>
-  </div>
+
+<!-- TEDDY -->
+<svg id="teddy" viewBox="0 0 200 260">
+  <circle cx="50" cy="40" r="25" fill="#c68642"/>
+  <circle cx="150" cy="40" r="25" fill="#c68642"/>
+  <circle cx="100" cy="80" r="55" fill="#d49a5c"/>
+  <ellipse cx="100" cy="170" rx="65" ry="80" fill="#c68642"/>
+
+  <ellipse class="eye" cx="80" cy="80" rx="6" ry="8"/>
+  <ellipse class="eye" cx="120" cy="80" rx="6" ry="8"/>
+
+  <ellipse cx="100" cy="95" rx="6" ry="4" fill="#333"/>
+
+  <ellipse id="tBlush1" cx="70" cy="95" rx="10" ry="6" fill="#ff9bb5" opacity="0"/>
+  <ellipse id="tBlush2" cx="130" cy="95" rx="10" ry="6" fill="#ff9bb5" opacity="0"/>
+
+  <!-- Diary -->
+  <rect x="65" y="140" width="70" height="50" rx="6" fill="#ffe6f0"/>
+  <text x="100" y="170" font-size="12" text-anchor="middle" fill="#c85b8c">Niyati</text>
+</svg>
+
+<!-- GIRL -->
+<svg id="girl" viewBox="0 0 200 260">
+  <ellipse cx="100" cy="80" rx="45" ry="55" fill="#ffccb3"/>
+  <rect x="50" y="130" width="100" height="100" rx="40" fill="#ff9bcf"/>
+  <ellipse cx="100" cy="65" rx="55" ry="65" fill="#5a3a2a"/>
+
+  <circle cx="85" cy="80" r="5"/>
+  <circle cx="115" cy="80" r="5"/>
+
+  <ellipse id="gBlush1" cx="70" cy="95" rx="10" ry="6" fill="#ff9bb5" opacity="0"/>
+  <ellipse id="gBlush2" cx="130" cy="95" rx="10" ry="6" fill="#ff9bb5" opacity="0"/>
+
+  <!-- Diary -->
+  <rect x="60" y="150" width="70" height="45" rx="6" fill="#ffe6f0"/>
+  <text x="95" y="178" font-size="12" text-anchor="middle" fill="#c85b8c">Niyati</text>
+</svg>
+
+<div id="name">Happy Teddy Day, Niyati 🤍</div>
+
 </div>
 
+<div id="tap">Tap anywhere for music 🎵</div>
+
+<audio id="music" loop>
+  <source src="https://cdn.pixabay.com/audio/2023/03/02/audio_90c5f16c1c.mp3" type="audio/mpeg">
+</audio>
+
 <script>
-let step=0;
-const teddy=document.getElementById("teddy");
-const girl=document.getElementById("girl");
-const moon=document.getElementById("moon");
-const text=document.getElementById("text");
-const final=document.getElementById("final");
+let started=false;
+document.body.addEventListener("click",()=>{
+  if(started) return;
+  started=true;
+  document.getElementById("music").play();
+  document.getElementById("tap").style.display="none";
 
-let teddyX=40;
-let girlX=window.innerWidth-120;
+  setTimeout(()=>{
+    teddy.classList.add("walk");
+    girl.classList.add("step");
+  },600);
 
-girl.style.left=girlX+"px";
+  setTimeout(()=>{
+    teddy.classList.add("hug");
+    girl.classList.add("girlHug");
 
-teddy.onclick=()=>{
-  if(step===0){
-    text.innerText="Teddy is walking to you 🤍";
-    walk();
-    document.getElementById("teddyBlush").style.opacity=1;
-    step++;
-  } else if(step===1){
-    hug();
-    step++;
-  }
-};
+    tBlush1.classList.add("blush");
+    tBlush2.classList.add("blush");
+    gBlush1.classList.add("blush");
+    gBlush2.classList.add("blush");
 
-function walk(){
-  function move(){
-    teddyX+=2;
-    teddy.style.left=teddyX+"px";
-    if(teddyX < window.innerWidth/2-50){
-      requestAnimationFrame(move);
+    moon.classList.add("moonGlow");
+    name.classList.add("showName");
+
+    // hearts
+    for(let i=0;i<6;i++){
+      let h=document.createElement("div");
+      h.className="heart";
+      h.innerHTML="💗";
+      h.style.left=(45+Math.random()*10)+"%";
+      h.style.animationDelay=i*0.3+"s";
+      document.body.appendChild(h);
+      setTimeout(()=>h.remove(),3000);
     }
-  }
-  move();
-}
-
-function hug(){
-  teddy.style.transform="rotate(-10deg) scale(1.2)";
-  girl.style.transform="translateX(-20px)";
-  document.getElementById("girlBlush").style.opacity=1;
-  text.style.display="none";
-  final.style.display="block";
-  pulseMoon();
-}
-
-function pulseMoon(){
-  let s=1,dir=1;
-  setInterval(()=>{
-    s+=dir*0.03;
-    if(s>1.4||s<1) dir*=-1;
-    moon.style.transform=`scale(${s})`;
-  },30);
-}
+  },3800);
+});
 </script>
 
 </body>
