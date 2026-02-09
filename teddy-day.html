@@ -1,17 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Teddy Day</title>
-
 <style>
-html,body{
+body{
   margin:0;
-  height:100%;
+  background:#0b0b2e;
   overflow:hidden;
-  background:radial-gradient(circle at top,#1b1b3a,#000);
-  font-family:'Comic Sans MS', cursive;
+  font-family:sans-serif;
   color:white;
 }
 
@@ -20,20 +17,11 @@ html,body{
   position:absolute;
   top:30px;
   right:30px;
-  width:90px;
-  height:90px;
-  background:#ffd966;
+  width:80px;
+  height:80px;
   border-radius:50%;
+  background:#ffd966;
   box-shadow:0 0 25px #ffd966;
-  transition:transform 1s;
-}
-.moonPulse{
-  animation:moonPulse 1.6s infinite;
-}
-@keyframes moonPulse{
-  0%{transform:scale(1)}
-  50%{transform:scale(1.4)}
-  100%{transform:scale(1)}
 }
 
 /* Text */
@@ -43,7 +31,6 @@ html,body{
   width:100%;
   text-align:center;
   font-size:20px;
-  z-index:10;
 }
 #final{
   position:absolute;
@@ -52,67 +39,31 @@ html,body{
   text-align:center;
   font-size:26px;
   display:none;
-  animation:glow 2s infinite alternate;
-}
-@keyframes glow{
-  from{text-shadow:0 0 5px pink}
-  to{text-shadow:0 0 25px pink}
 }
 
 /* Scene */
 #scene{
   position:absolute;
-  bottom:40px;
+  bottom:30px;
   width:100%;
-  height:200px;
+  height:220px;
 }
 
-/* Girl */
-#girl{
+/* Characters */
+.character{
   position:absolute;
-  left:65%;
   bottom:0;
-  font-size:120px;
-  transform:translateX(0);
-  transition:transform 1.2s;
-}
-.girlMove{
-  transform:translateX(-40px);
+  width:120px;
 }
 
-/* Teddy */
-#teddy{
-  position:absolute;
-  left:10%;
-  bottom:0;
-  font-size:120px;
-  transform:translateX(0) rotate(0deg) scale(1);
-  transition:transform 3s linear;
-}
-.walk{
-  transform:translateX(260px);
-}
-.hug{
-  transform:translateX(260px) rotate(-12deg) scale(1.3);
-}
+#teddy{ left:40px; }
+#girl{ right:40px; }
 
-/* Blush */
 .blush{
   position:absolute;
-  font-size:36px;
+  width:40px;
+  bottom:70px;
   opacity:0;
-  transition:opacity 1s;
-}
-#teddyBlush{
-  left:42%;
-  bottom:95px;
-}
-#girlBlush{
-  left:63%;
-  bottom:95px;
-}
-.show{
-  opacity:1;
 }
 </style>
 </head>
@@ -120,51 +71,73 @@ html,body{
 <body>
 
 <div id="moon"></div>
-<div id="text">Tap the teddy when you feel like it… 🧸</div>
-<div id="final">Happy Teddy Day, <b>Niyati</b> 🤍🧸</div>
+<div id="text">Tap the teddy 🧸</div>
+<div id="final">Happy Teddy Day, <b>Niyati</b> 🤍</div>
 
 <div id="scene">
-  <div id="girl">👧</div>
-  <div id="girlBlush" class="blush">🌸 🌸</div>
+  <img id="teddy" class="character" src="https://i.imgur.com/1Q9Z1Zm.png">
+  <img id="girl" class="character" src="https://i.imgur.com/7QFz7ZK.png">
 
-  <div id="teddy">🧸</div>
-  <div id="teddyBlush" class="blush">🌸 🌸</div>
+  <img id="teddyBlush" class="blush" src="https://i.imgur.com/6X4VYQn.png">
+  <img id="girlBlush" class="blush" src="https://i.imgur.com/6X4VYQn.png">
 </div>
-
-<audio id="music" loop>
-  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_6f68c88b77.mp3">
-</audio>
 
 <script>
 let step=0;
 const teddy=document.getElementById("teddy");
 const girl=document.getElementById("girl");
 const moon=document.getElementById("moon");
-const music=document.getElementById("music");
+const text=document.getElementById("text");
 
-teddy.addEventListener("click",()=>{
+let teddyX=40;
+let girlX=window.innerWidth-160;
+
+girl.style.left=girlX+"px";
+
+teddy.onclick=()=>{
   if(step===0){
-    music.play();
-    document.getElementById("text").innerText="The teddy is walking to you… 🤍";
-
-    teddy.classList.add("walk");
-    girl.classList.add("girlMove");
-    document.getElementById("teddyBlush").classList.add("show");
-
+    text.innerText="Teddy is coming 🤍";
+    walkTeddy();
     step++;
-    return;
-  }
-
-  if(step===1){
-    teddy.classList.add("hug");
-    moon.classList.add("moonPulse");
-    document.getElementById("girlBlush").classList.add("show");
-
-    document.getElementById("text").style.display="none";
-    document.getElementById("final").style.display="block";
+  } else if(step===1){
+    hug();
     step++;
   }
-});
+};
+
+function walkTeddy(){
+  function move(){
+    teddyX+=2;
+    teddy.style.left=teddyX+"px";
+    if(teddyX < window.innerWidth/2-60){
+      requestAnimationFrame(move);
+    }
+  }
+  move();
+}
+
+function hug(){
+  document.getElementById("teddyBlush").style.left=teddyX+40+"px";
+  document.getElementById("girlBlush").style.left=girlX+40+"px";
+  document.getElementById("teddyBlush").style.opacity=1;
+  document.getElementById("girlBlush").style.opacity=1;
+
+  teddy.style.transform="rotate(-10deg) scale(1.2)";
+  girl.style.transform="translateX(-20px)";
+
+  moonPulse();
+  text.style.display="none";
+  document.getElementById("final").style.display="block";
+}
+
+function moonPulse(){
+  let scale=1,dir=1;
+  setInterval(()=>{
+    scale+=dir*0.02;
+    if(scale>1.4||scale<1) dir*=-1;
+    moon.style.transform=`scale(${scale})`;
+  },30);
+}
 </script>
 
 </body>
