@@ -28,6 +28,7 @@ body {
   align-items: center;
   justify-content: center;
   font-size: 40px;
+  transition: transform 0.5s;
 }
 
 /* Characters */
@@ -37,13 +38,8 @@ body {
   transition: all 1.2s ease;
 }
 
-.girl {
-  left: 40px;
-}
-
-.teddy {
-  right: 40px;
-}
+.girl { left: 40px; }
+.teddy { right: 40px; }
 
 .face {
   width: 50px;
@@ -53,9 +49,7 @@ body {
   margin: auto;
 }
 
-.teddy .face {
-  background: #c68c53;
-}
+.teddy .face { background: #c68c53; }
 
 .body {
   width: 70px;
@@ -65,8 +59,17 @@ body {
   margin-top: 6px;
 }
 
-.teddy .body {
-  background: #d9a066;
+.teddy .body { background: #d9a066; }
+
+/* Heartbeat */
+.hug {
+  animation: heartbeat 0.9s infinite;
+}
+
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.08); }
+  60% { transform: scale(1); }
 }
 
 /* Diary */
@@ -112,6 +115,21 @@ body {
   font-size: 14px;
   opacity: 0.85;
 }
+
+/* Stars */
+.star {
+  position: absolute;
+  top: -10px;
+  color: white;
+  font-size: 12px;
+  animation: fall linear infinite;
+  opacity: 0.8;
+}
+
+@keyframes fall {
+  from { transform: translateY(0); }
+  to { transform: translateY(110vh); }
+}
 </style>
 </head>
 
@@ -146,28 +164,41 @@ let step = 0;
 
 document.body.addEventListener("click", () => {
   if (step === 0) {
-    // move closer
-    document.getElementById("girl").style.left = "35%";
-    document.getElementById("teddy").style.right = "35%";
-    document.getElementById("hint").innerText = "💞 Tap again for hug";
+    girl.style.left = "35%";
+    teddy.style.right = "35%";
+    hint.innerText = "💞 Tap again for hug";
     step++;
-  } 
+  }
   else if (step === 1) {
-    // hug
-    document.getElementById("girl").style.left = "45%";
-    document.getElementById("teddy").style.right = "45%";
-    document.getElementById("moon").innerText = "😊";
-    document.getElementById("diary").style.display = "block";
-    document.getElementById("hint").innerText = "📖 Tap again to open diary";
+    girl.style.left = "45%";
+    teddy.style.right = "45%";
+    girl.classList.add("hug");
+    teddy.classList.add("hug");
+    moon.innerText = "😊";
+    diary.style.display = "block";
+    hint.innerText = "📖 Tap again for message";
+    startStars();
     step++;
-  } 
+  }
   else if (step === 2) {
-    // final message
-    document.getElementById("message").style.display = "block";
-    document.getElementById("hint").innerText = "💗";
+    message.style.display = "block";
+    hint.innerText = "💗";
     step++;
   }
 });
+
+function startStars() {
+  for (let i = 0; i < 40; i++) {
+    const star = document.createElement("div");
+    star.className = "star";
+    star.innerText = "✨";
+    star.style.left = Math.random() * 100 + "vw";
+    star.style.animationDuration = (2 + Math.random() * 3) + "s";
+    document.body.appendChild(star);
+
+    setTimeout(() => star.remove(), 6000);
+  }
+}
 </script>
 
 </body>
