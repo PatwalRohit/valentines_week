@@ -27,7 +27,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 40px;
+  font-size: 38px;
 }
 
 /* ===== GIRL ===== */
@@ -51,7 +51,39 @@ body {
   background: #ffddb8;
   border-radius: 50%;
   margin: -20px auto 0;
+  position: relative;
 }
+.girl .eye {
+  width: 5px;
+  height: 5px;
+  background: #000;
+  border-radius: 50%;
+  position: absolute;
+  top: 16px;
+}
+.girl .eye.left { left: 12px; }
+.girl .eye.right { right: 12px; }
+.girl .smile {
+  width: 14px;
+  height: 7px;
+  border-bottom: 2px solid #000;
+  border-radius: 0 0 14px 14px;
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.girl .blush {
+  width: 6px;
+  height: 6px;
+  background: pink;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 14px;
+}
+.girl .blush.left { left: 4px; }
+.girl .blush.right { right: 4px; }
+
 .girl .body {
   width: 70px;
   height: 90px;
@@ -86,7 +118,39 @@ body {
   background: #d19b63;
   border-radius: 50%;
   margin: -10px auto 0;
+  position: relative;
 }
+.teddy .eye {
+  width: 5px;
+  height: 5px;
+  background: #000;
+  border-radius: 50%;
+  position: absolute;
+  top: 18px;
+}
+.teddy .eye.left { left: 14px; }
+.teddy .eye.right { right: 14px; }
+.teddy .nose {
+  width: 8px;
+  height: 6px;
+  background: #000;
+  border-radius: 50%;
+  position: absolute;
+  top: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.teddy .smile {
+  width: 14px;
+  height: 7px;
+  border-bottom: 2px solid #000;
+  border-radius: 0 0 14px 14px;
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 .teddy .body {
   width: 80px;
   height: 90px;
@@ -125,7 +189,7 @@ body {
 /* 💌 Message */
 .message {
   position: absolute;
-  top: 40%;
+  top: 38%;
   left: 50%;
   transform: translate(-50%, -50%);
   background: white;
@@ -145,14 +209,12 @@ body {
   width: 100%;
   text-align: center;
   color: #fff;
-  opacity: 0.9;
 }
 
-/* ✨ Stars */
-.star {
+/* ✨ Hearts & Roses */
+.fall {
   position: absolute;
   top: -10px;
-  font-size: 12px;
   animation: fall linear infinite;
 }
 @keyframes fall {
@@ -167,7 +229,13 @@ body {
 
 <div class="girl" id="girl">
   <div class="hair"></div>
-  <div class="face"></div>
+  <div class="face">
+    <div class="eye left"></div>
+    <div class="eye right"></div>
+    <div class="smile"></div>
+    <div class="blush left"></div>
+    <div class="blush right"></div>
+  </div>
   <div class="body"></div>
 </div>
 
@@ -176,7 +244,12 @@ body {
     <div class="ear"></div>
     <div class="ear"></div>
   </div>
-  <div class="face"></div>
+  <div class="face">
+    <div class="eye left"></div>
+    <div class="eye right"></div>
+    <div class="nose"></div>
+    <div class="smile"></div>
+  </div>
   <div class="body"></div>
 </div>
 
@@ -204,26 +277,34 @@ document.body.onclick = () => {
     girl.classList.add("hug");
     teddy.classList.add("hug");
     diary.style.display = "block";
-    hint.innerText = "📖 Tap again";
-    startStars();
+    hint.innerText = "🌸 Tap again";
+    hearts();
     step++;
   }
   else if (step === 2) {
     message.style.display = "block";
+    roses();
     hint.innerText = "💗";
     step++;
   }
 };
 
-function startStars() {
-  for (let i = 0; i < 35; i++) {
-    const s = document.createElement("div");
-    s.className = "star";
-    s.innerText = "✨";
-    s.style.left = Math.random() * 100 + "vw";
-    s.style.animationDuration = (2 + Math.random() * 3) + "s";
-    document.body.appendChild(s);
-    setTimeout(() => s.remove(), 6000);
+function hearts() {
+  spawn("💖", 30);
+}
+function roses() {
+  spawn("🌹", 40);
+}
+function spawn(icon, count) {
+  for (let i = 0; i < count; i++) {
+    const e = document.createElement("div");
+    e.className = "fall";
+    e.innerText = icon;
+    e.style.left = Math.random() * 100 + "vw";
+    e.style.fontSize = "20px";
+    e.style.animationDuration = (2 + Math.random() * 3) + "s";
+    document.body.appendChild(e);
+    setTimeout(() => e.remove(), 6000);
   }
 }
 </script>
