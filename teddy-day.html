@@ -1,237 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Teddy Day Niyati</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Teddy Day Niyati</title>
 
 <style>
-html,body{
-  margin:0; padding:0;
-  width:100%; height:100%;
-  overflow:hidden;
-  font-family:'Segoe UI',sans-serif;
-  background:radial-gradient(circle at top,#1a1f4d,#070b25);
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(#0b1240, #020617);
+  overflow: hidden;
+  font-family: 'Segoe UI', sans-serif;
 }
 
 /* Moon */
-#moon{
-  position:absolute;
-  top:40px; right:40px;
-  width:120px; height:120px;
-  background:#ffd86b;
-  border-radius:50%;
-  box-shadow:0 0 20px rgba(255,216,107,0.4);
-  transition:all 1s ease;
-}
-#moonFace{
-  position:absolute;
-  top:30px; left:30px;
-  width:60px; height:40px;
-}
-.moonGlow{
-  box-shadow:0 0 55px rgba(255,216,107,1);
-  transform:scale(1.1);
+.moon {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  width: 120px;
+  height: 120px;
+  background: #ffd86b;
+  border-radius: 50%;
+  box-shadow: 0 0 30px #ffd86b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
 }
 
-/* Scene */
-#scene{
-  position:absolute;
-  bottom:40px;
-  width:100%;
-  height:330px;
+/* Characters */
+.girl, .teddy {
+  position: absolute;
+  bottom: 120px;
+  transition: all 1.2s ease;
 }
 
-/* Teddy */
-#teddy{
-  position:absolute;
-  left:8%;
-  bottom:0;
-  width:150px;
-  transition:transform 3s ease;
+.girl {
+  left: 40px;
 }
-.walk{transform:translateX(240px);}
-.hug{transform:translateX(280px) scale(1.05) rotate(-6deg);}
 
-/* Girl */
-#girl{
-  position:absolute;
-  right:10%;
-  bottom:0;
-  width:120px;
-  transition:transform 3s ease;
+.teddy {
+  right: 40px;
 }
-.step{transform:translateX(-90px);}
-.girlHug{transform:translateX(-130px) scale(1.05);}
 
-/* Blink */
-@keyframes blink{
-  0%,90%,100%{transform:scaleY(1)}
-  95%{transform:scaleY(0.1)}
+.face {
+  width: 50px;
+  height: 60px;
+  background: #5a3a2e;
+  border-radius: 50%;
+  margin: auto;
 }
-.eye{transform-origin:center; animation:blink 5s infinite;}
 
-/* Blush */
-.blush{opacity:1!important}
+.teddy .face {
+  background: #c68c53;
+}
+
+.body {
+  width: 70px;
+  height: 80px;
+  background: pink;
+  border-radius: 40px;
+  margin-top: 6px;
+}
+
+.teddy .body {
+  background: #d9a066;
+}
 
 /* Diary */
-#diary{
-  transform-origin:left center;
-  transition:transform 1.2s ease;
-}
-.openDiary{transform:rotateY(-120deg);}
-
-/* Name writing */
-#write{
-  stroke-dasharray:300;
-  stroke-dashoffset:300;
-}
-.writeAnim{
-  animation:write 2s linear forwards;
-}
-@keyframes write{
-  to{stroke-dashoffset:0}
-}
-
-/* Hearts */
-.heart{
-  position:absolute;
-  bottom:150px;
-  left:50%;
-  font-size:22px;
-  animation:float 3s ease forwards;
-}
-@keyframes float{
-  from{transform:translate(-50%,0) scale(0.6); opacity:1}
-  to{transform:translate(-50%,-140px) scale(1.3); opacity:0}
+.diary {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 80px;
+  background: #fff;
+  border-radius: 8px;
+  display: none;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  color: #b56bd6;
+  box-shadow: 0 0 20px #b56bd6;
 }
 
-/* Final popup */
-#popup{
-  position:absolute;
-  inset:0;
-  background:rgba(0,0,0,0.6);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  opacity:0;
-  pointer-events:none;
-  transition:opacity 1s ease;
+/* Message */
+.message {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255,255,255,0.95);
+  padding: 20px 28px;
+  border-radius: 16px;
+  display: none;
+  font-size: 20px;
+  color: #e91e63;
+  box-shadow: 0 0 25px pink;
 }
-#popup div{
-  background:#fff;
-  padding:24px;
-  border-radius:16px;
-  text-align:center;
-  max-width:260px;
-}
-.showPopup{opacity:1; pointer-events:auto}
 
-/* Tap */
-#tap{
-  position:absolute;
-  bottom:20px;
-  width:100%;
-  text-align:center;
-  color:#ccc;
-  font-size:14px;
+/* Hint */
+.hint {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  font-size: 14px;
+  opacity: 0.85;
 }
 </style>
 </head>
 
 <body>
 
-<div id="moon">
-  <svg id="moonFace" viewBox="0 0 60 40">
-    <circle cx="20" cy="15" r="3"/>
-    <circle cx="40" cy="15" r="3"/>
-    <path d="M18 25 Q30 32 42 25" stroke="#333" stroke-width="3" fill="none"/>
-  </svg>
+<div class="moon" id="moon">🙂</div>
+
+<div class="girl" id="girl">
+  <div class="face"></div>
+  <div class="body"></div>
 </div>
 
-<div id="scene">
-
-<!-- TEDDY -->
-<svg id="teddy" viewBox="0 0 200 260">
-  <circle cx="50" cy="40" r="25" fill="#c68642"/>
-  <circle cx="150" cy="40" r="25" fill="#c68642"/>
-  <circle cx="100" cy="80" r="55" fill="#d49a5c"/>
-  <ellipse cx="100" cy="170" rx="65" ry="80" fill="#c68642"/>
-
-  <ellipse class="eye" cx="80" cy="80" rx="6" ry="8"/>
-  <ellipse class="eye" cx="120" cy="80" rx="6" ry="8"/>
-  <ellipse cx="100" cy="95" rx="6" ry="4" fill="#333"/>
-
-  <ellipse id="tBl1" cx="70" cy="95" rx="10" ry="6" fill="#ff9bb5" opacity="0"/>
-  <ellipse id="tBl2" cx="130" cy="95" rx="10" ry="6" fill="#ff9bb5" opacity="0"/>
-
-  <!-- Diary -->
-  <g id="diary">
-    <rect x="65" y="145" width="70" height="45" rx="6" fill="#ffe6f0"/>
-    <path id="write" d="M80 170 L120 170" stroke="#c85b8c" stroke-width="3" fill="none"/>
-  </g>
-</svg>
-
-<!-- GIRL -->
-<svg id="girl" viewBox="0 0 200 260">
-  <ellipse cx="100" cy="80" rx="45" ry="55" fill="#ffccb3"/>
-  <rect x="50" y="130" width="100" height="100" rx="40" fill="#ff9bcf"/>
-  <ellipse cx="100" cy="65" rx="55" ry="65" fill="#5a3a2a"/>
-
-  <circle cx="85" cy="80" r="5"/>
-  <circle cx="115" cy="80" r="5"/>
-
-  <ellipse id="gBl1" cx="70" cy="95" rx="10" ry="6" fill="#ff9bb5" opacity="0"/>
-  <ellipse id="gBl2" cx="130" cy="95" rx="10" ry="6" fill="#ff9bb5" opacity="0"/>
-</svg>
-
+<div class="teddy" id="teddy">
+  <div class="face"></div>
+  <div class="body"></div>
 </div>
 
-<div id="popup">
-  <div>
-    <h3>Happy Teddy Day, Niyati 🤍</h3>
-    <p>Some hugs are meant to stay forever.</p>
-  </div>
+<div class="diary" id="diary">
+  ✍️ Niyati
 </div>
 
-<div id="tap">Tap anywhere 💗</div>
+<div class="message" id="message">
+  🧸 Happy Teddy Day <b>Niyati</b> 💖
+</div>
 
-<audio id="music" loop>
-  <source src="https://cdn.pixabay.com/audio/2023/03/02/audio_90c5f16c1c.mp3">
-</audio>
+<div class="hint" id="hint">
+  👉 Tap anywhere to bring them closer
+</div>
 
 <script>
-let started=false;
-document.body.addEventListener("click",()=>{
-  if(started) return;
-  started=true;
-  tap.style.display="none";
-  music.play();
+let step = 0;
 
-  setTimeout(()=>{teddy.classList.add("walk"); girl.classList.add("step");},600);
-
-  setTimeout(()=>{
-    teddy.classList.add("hug");
-    girl.classList.add("girlHug");
-    tBl1.classList.add("blush"); tBl2.classList.add("blush");
-    gBl1.classList.add("blush"); gBl2.classList.add("blush");
-    moon.classList.add("moonGlow");
-
-    diary.classList.add("openDiary");
-    write.classList.add("writeAnim");
-
-    for(let i=0;i<6;i++){
-      let h=document.createElement("div");
-      h.className="heart";
-      h.innerHTML="💗";
-      h.style.left=(45+Math.random()*10)+"%";
-      h.style.animationDelay=i*0.3+"s";
-      document.body.appendChild(h);
-      setTimeout(()=>h.remove(),3000);
-    }
-  },3800);
-
-  setTimeout(()=>popup.classList.add("showPopup"),6500);
+document.body.addEventListener("click", () => {
+  if (step === 0) {
+    // move closer
+    document.getElementById("girl").style.left = "35%";
+    document.getElementById("teddy").style.right = "35%";
+    document.getElementById("hint").innerText = "💞 Tap again for hug";
+    step++;
+  } 
+  else if (step === 1) {
+    // hug
+    document.getElementById("girl").style.left = "45%";
+    document.getElementById("teddy").style.right = "45%";
+    document.getElementById("moon").innerText = "😊";
+    document.getElementById("diary").style.display = "block";
+    document.getElementById("hint").innerText = "📖 Tap again to open diary";
+    step++;
+  } 
+  else if (step === 2) {
+    // final message
+    document.getElementById("message").style.display = "block";
+    document.getElementById("hint").innerText = "💗";
+    step++;
+  }
 });
 </script>
 
