@@ -9,38 +9,11 @@
 body{
   margin:0;
   height:100vh;
-  overflow:hidden;
   font-family: Arial, sans-serif;
-  background:#ffffff;
-  transition:1.2s ease;
-}
-
-/* Center Utility */
-.center{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
+  overflow:hidden;
+  background:radial-gradient(circle at top,#0c1445,#020617);
+  color:white;
   text-align:center;
-}
-
-/* Fade Animation */
-.fade{
-  animation:fadeIn 1.2s ease forwards;
-}
-@keyframes fadeIn{
-  from{opacity:0; transform:translate(-50%,-55%);}
-  to{opacity:1; transform:translate(-50%,-50%);}
-}
-
-/* Hint */
-.hint{
-  position:absolute;
-  bottom:18px;
-  width:100%;
-  text-align:center;
-  font-size:14px;
-  color:#777;
 }
 
 /* Moon */
@@ -48,84 +21,78 @@ body{
   position:absolute;
   top:30px;
   right:30px;
-  width:80px;
-  height:80px;
-  border-radius:50%;
+  width:90px;
+  height:90px;
   background:#ffd86b;
-  box-shadow:0 0 25px #ffd86b;
-  display:none;
-  animation:pulse 4s infinite;
+  border-radius:50%;
+  box-shadow:0 0 30px #ffd86b;
+  animation:moonGlow 4s infinite;
 }
-@keyframes pulse{
+@keyframes moonGlow{
   0%,100%{box-shadow:0 0 20px #ffd86b;}
   50%{box-shadow:0 0 40px #ffd86b;}
 }
 
-/* Diary */
-.diary{
-  width:240px;
-  padding:20px;
-  background:#ffffff;
-  border-radius:16px;
-  box-shadow:0 0 30px rgba(0,0,0,0.2);
-  display:none;
+/* Center Content */
+.center{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
 }
-.diary h3{
-  margin:0 0 12px;
-  color:#e91e63;
-}
-.page{
-  font-size:16px;
-  min-height:60px;
-  color:#333;
+
+/* Promise Text */
+.promiseText{
+  font-size:20px;
+  line-height:1.6;
+  margin-bottom:40px;
 }
 
 /* Pinky Scene */
 .pinky-scene{
-  position:absolute;
-  top:65%;
-  left:50%;
-  transform:translate(-50%,-50%);
   display:flex;
-  gap:60px;
   align-items:center;
-  display:none;
+  justify-content:center;
+  gap:20px;
+  margin-top:20px;
 }
 
-/* Hands */
+/* Hands (emoji style) */
 .hand{
-  width:70px;
-  height:95px;
-  background:#f5d6b4;
-  border-radius:45px;
-  position:relative;
-  box-shadow:0 6px 18px rgba(0,0,0,0.25);
+  font-size:70px;
   transition:0.8s ease;
 }
 
-.pinky{
-  position:absolute;
-  top:-25px;
-  left:50%;
-  transform:translateX(-50%);
-  width:14px;
-  height:40px;
-  background:#f5d6b4;
-  border-radius:20px;
+.move-left{
+  transform:translateX(25px);
+}
+.move-right{
+  transform:translateX(-25px);
 }
 
-.link{
-  transform:translateX(20px);
+/* Heart */
+.heart{
+  font-size:32px;
+  opacity:0;
+  transition:0.6s ease;
+}
+
+.show-heart{
+  opacity:1;
+  animation:heartbeat 1s infinite;
+}
+
+@keyframes heartbeat{
+  0%,100%{ transform:scale(1); }
+  50%{ transform:scale(1.25); }
 }
 
 /* Final Message */
 .final{
   display:none;
-  font-size:24px;
+  margin-top:40px;
+  font-size:22px;
   color:#ff4d88;
-  line-height:1.6;
-  text-align:center;
-  animation:fadeIn 1.2s ease forwards;
 }
 
 /* Roses */
@@ -137,94 +104,71 @@ body{
 @keyframes fall{
   to{ transform:translateY(110vh); }
 }
+
+/* Hint */
+.hint{
+  position:absolute;
+  bottom:20px;
+  width:100%;
+  font-size:14px;
+  color:#ccc;
+}
 </style>
 </head>
 
 <body>
 
-<div class="moon" id="moon"></div>
+<div class="moon"></div>
 
-<div class="center fade" id="sceneText">
-  <p style="font-size:18px;color:#444;">
-    Promises don’t need noise.<br>
-    They need sincerity.
-  </p>
-</div>
+<div class="center">
 
-<div class="center diary" id="diary">
-  <h3>Niyati</h3>
-  <div class="page" id="pageText"></div>
-</div>
-
-<div class="pinky-scene" id="pinkyScene">
-  <div class="hand" id="hand1">
-    <div class="pinky"></div>
+  <div class="promiseText">
+    🌸 I promise patience.<br>
+    🌙 I promise respect.<br>
+    ✨ I promise honesty.<br><br>
+    For your kindness.<br>
+    For your strength.<br>
+    For your calm heart.
   </div>
-  <div class="hand" id="hand2">
-    <div class="pinky"></div>
+
+  <div class="pinky-scene">
+    <div class="hand" id="leftHand">🤙</div>
+    <div class="heart" id="heart">💗</div>
+    <div class="hand" id="rightHand">🤙</div>
   </div>
+
+  <div class="final" id="finalMsg">
+    🤍 Promise Sealed<br><br>
+    Happy Promise Day<br>
+    <b>Niyati</b> 🌙<br><br>
+    <span style="font-size:16px;color:#ccc;">
+      No pressure. Just a promise.
+    </span>
+  </div>
+
 </div>
 
-<div class="center final" id="finalMsg">
-  🤍 Promise Sealed <br><br>
-  Happy Promise Day <br>
-  <b style="font-size:28px;">Niyati</b> 🌙<br><br>
-  <span style="font-size:16px;color:#ccc;">
-    No pressure. Just a promise.
-  </span>
-</div>
-
-<div class="hint" id="hint">👉 Tap anywhere to continue</div>
+<div class="hint" id="hint">👉 Tap anywhere to seal the promise</div>
 
 <script>
 let step = 0;
-let page = 0;
-
-const promises = [
-  "🌸 I promise patience.",
-  "🤍 I promise respect.",
-  "🌙 I promise honesty.",
-  "✨ I promise to protect your peace."
-];
 
 document.body.onclick = () => {
 
   if(step === 0){
-    document.body.style.background = "radial-gradient(circle at top,#0c1445,#020617)";
-    sceneText.style.display = "none";
-    diary.style.display = "block";
-    moon.style.display = "block";
-    pageText.innerText = promises[page];
-    hint.innerText = "📖 Tap to flip the page";
-    step++;
-  }
-
-  else if(step === 1){
-    page++;
-    if(page < promises.length){
-      pageText.innerText = promises[page];
-    } else {
-      diary.style.display = "none";
-      pinkyScene.style.display = "flex";
-      hint.innerText = "🤝 Tap to seal the promise";
-      step++;
-    }
-  }
-
-  else if(step === 2){
-    hand1.classList.add("link");
-    hand2.classList.add("link");
+    document.getElementById("leftHand").classList.add("move-left");
+    document.getElementById("rightHand").classList.add("move-right");
+    document.getElementById("heart").classList.add("show-heart");
     dropRoses();
-    hint.innerText = "💖 One last tap";
+    document.getElementById("hint").innerText = "💖 One last tap";
+    step++;
+  }
+  else if(step === 1){
+    document.getElementById("finalMsg").style.display="block";
+    document.getElementById("hint").innerText = "🤍";
     step++;
   }
 
-  else if(step === 3){
-    pinkyScene.style.display = "none";
-    finalMsg.style.display = "block";
-    hint.innerText = "✨";
-    step++;
-  }
 };
 
 function dropRoses(){
