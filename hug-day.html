@@ -1,210 +1,228 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hug Day 🌙💜</title>
+<title>Hug Day – For Niyati 💜</title>
 
 <style>
 body{
   margin:0;
   overflow:hidden;
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(to bottom,#d8c6f5,#b497e5,#8a6cd1);
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(to bottom,#f3e8ff,#d8b4fe);
 }
 
-/* Moon */
+/* 🌙 Moon */
 .moon{
   position:absolute;
-  top:60px;
-  right:60px;
-  width:140px;
-  height:140px;
-  background:#fff3b0;
-  border-radius:50%;
-  box-shadow:0 0 60px #fff3b0;
+  top:40px;
+  right:40px;
+  font-size:70px;
+  animation:moonGlow 4s infinite alternate;
+}
+@keyframes moonGlow{
+  from{filter:drop-shadow(0 0 10px #fff);}
+  to{filter:drop-shadow(0 0 30px #fff);}
 }
 
-/* Stars */
+/* ✨ Stars */
 .star{
   position:absolute;
-  width:4px;
-  height:4px;
-  background:white;
-  border-radius:50%;
-  animation: twinkle 2s infinite alternate;
+  color:white;
+  font-size:18px;
+  animation:twinkle 2s infinite alternate;
 }
 @keyframes twinkle{
-  from{opacity:0.3}
-  to{opacity:1}
+  from{opacity:.3;}
+  to{opacity:1;}
 }
 
-/* Couple */
+/* 🧚 Fairy */
+.fairy{
+  position:absolute;
+  top:120px;
+  left:-50px;
+  font-size:35px;
+  animation:fly 12s linear infinite;
+}
+@keyframes fly{
+  0%{left:-50px; top:120px;}
+  50%{top:80px;}
+  100%{left:110%; top:140px;}
+}
+
+/* 💑 Couple */
 .couple{
   position:absolute;
-  bottom:120px;
+  bottom:150px;
   left:50%;
   transform:translateX(-50%);
   font-size:90px;
+  display:flex;
+  gap:120px;
   cursor:pointer;
-  transition:0.5s;
 }
-.hug{
-  animation: glow 1s infinite alternate;
+
+#boy,#girl{
+  transition:1.2s;
+}
+
+.hugBoy{
+  transform:translateX(60px) scale(1.1);
+}
+
+.hugGirl{
+  transform:translateX(-60px) scale(1.1);
+}
+
+.hugGlow{
+  animation:glow 1s infinite alternate;
 }
 @keyframes glow{
-  from{filter: drop-shadow(0 0 10px pink);}
-  to{filter: drop-shadow(0 0 30px deeppink);}
+  from{filter:drop-shadow(0 0 10px #ff99ff);}
+  to{filter:drop-shadow(0 0 30px #ff66ff);}
+}
+
+/* 💓 Heartbeat effect */
+@keyframes heartbeat{
+  0%{transform:scale(1);}
+  25%{transform:scale(1.05);}
+  50%{transform:scale(1);}
+  75%{transform:scale(1.08);}
+  100%{transform:scale(1);}
+}
+.beat{
+  animation:heartbeat 1s infinite;
+}
+
+/* 🌸 Petals */
+.petal{
+  position:absolute;
+  top:-20px;
+  font-size:18px;
+  animation:fall linear infinite;
+}
+@keyframes fall{
+  to{transform:translateY(110vh);}
+}
+
+/* 📔 Diary */
+.diary{
+  position:absolute;
+  width:260px;
+  height:180px;
+  background:white;
+  border-radius:12px;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) rotateY(90deg);
+  transform-style:preserve-3d;
+  transition:1s;
+  box-shadow:0 0 25px rgba(0,0,0,0.2);
+  padding:20px;
+  display:none;
+}
+.diary.open{
+  transform:translate(-50%,-50%) rotateY(0deg);
+}
+.diary h3{
+  margin:0;
+  color:#b56bd6;
+}
+
+/* 👩‍⚕️ Stethoscope */
+.stetho{
+  position:absolute;
+  bottom:40px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:30px;
+  display:none;
+  animation:stethMove 2s infinite;
+}
+@keyframes stethMove{
+  0%,100%{transform:translateX(-50%) rotate(-5deg);}
+  50%{transform:translateX(-50%) rotate(5deg);}
 }
 
 /* Hint */
 .hint{
   position:absolute;
-  bottom:40px;
+  bottom:20px;
   width:100%;
   text-align:center;
-  font-size:18px;
-  opacity:0.8;
-}
-
-/* Petals */
-.petal{
-  position:absolute;
-  font-size:20px;
-  animation: fall linear infinite;
-}
-@keyframes fall{
-  0%{transform:translateY(-10vh) rotate(0deg);}
-  100%{transform:translateY(110vh) rotate(360deg);}
-}
-
-/* Fairy */
-.fairy{
-  position:absolute;
-  top:150px;
-  left:-100px;
-  font-size:40px;
-  animation: fly 12s linear infinite;
-}
-@keyframes fly{
-  0%{left:-100px; top:200px;}
-  50%{top:120px;}
-  100%{left:110%; top:180px;}
-}
-
-/* Diary */
-.diary{
-  position:absolute;
-  width:320px;
-  height:420px;
-  background:#f8eaff;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%) rotateY(90deg);
-  border-radius:10px;
-  box-shadow:0 0 40px rgba(0,0,0,0.3);
-  padding:20px;
-  display:none;
-  transition:1s;
-}
-.diary.open{
-  transform:translate(-50%,-50%) rotateY(0deg);
-}
-.promiseText{
-  font-size:18px;
-  line-height:1.6;
-  margin-top:20px;
-}
-
-/* Stethoscope */
-.stetho{
-  position:absolute;
-  top:-40px;
-  right:-40px;
-  font-size:30px;
-  animation: rotate 6s linear infinite;
-}
-@keyframes rotate{
-  from{transform:rotate(0deg);}
-  to{transform:rotate(360deg);}
-}
-
-/* Button */
-button{
-  margin-top:20px;
-  padding:10px 20px;
-  background:#b497e5;
-  border:none;
-  border-radius:20px;
-  font-size:16px;
+  color:#6b21a8;
 }
 </style>
 </head>
 
 <body>
 
-<div class="moon"></div>
+<div class="moon">🌙</div>
 
 <div class="fairy">🧚‍♀️</div>
 
-<div class="couple" id="couple">🧑‍🤝‍🧑</div>
+<div class="star" style="top:20%;left:30%;">✨</div>
+<div class="star" style="top:35%;left:70%;">✨</div>
+<div class="star" style="top:60%;left:20%;">✨</div>
 
-<div class="hint">Tap the couple to hug 💞</div>
-
-<div class="diary" id="diary">
-  <div class="stetho">🩺</div>
-  <h3>Happy Hug Day 💜</h3>
-  <div class="promiseText">
-    I promise to protect your soft heart. 🌙<br><br>
-    I promise patience, respect & honesty.<br><br>
-    Your kindness deserves the warmest hug.<br><br>
-    Sealed with love.
-  </div>
-  <button onclick="sealHug()">Seal This Hug 💓</button>
+<div class="couple">
+  <span id="boy">👨</span>
+  <span id="girl">👩</span>
 </div>
 
-<audio id="heartbeat" loop>
-<source src="https://www.soundjay.com/human/heartbeat-01a.mp3" type="audio/mpeg">
-</audio>
+<div class="hint">💜 Tap them to give a warm hug</div>
+
+<div class="diary" id="diary">
+  <h3>Niyati 💜</h3>
+  <p>
+  Today I don't promise perfection...<br><br>
+  I promise warmth when you feel low.<br>
+  I promise calm when you feel emotional.<br><br>
+  Happy Hug Day 🤍
+  </p>
+</div>
+
+<div class="stetho" id="stetho">🩺</div>
+
+<audio id="heartbeat" src="https://www.soundjay.com/heartbeat/heartbeat-01.mp3"></audio>
 
 <script>
+const couple=document.querySelector(".couple");
+const boy=document.getElementById("boy");
+const girl=document.getElementById("girl");
+const diary=document.getElementById("diary");
+const stetho=document.getElementById("stetho");
+const heartbeat=document.getElementById("heartbeat");
 
-/* Stars */
-for(let i=0;i<40;i++){
-  let star=document.createElement("div");
-  star.className="star";
-  star.style.top=Math.random()*100+"vh";
-  star.style.left=Math.random()*100+"vw";
-  document.body.appendChild(star);
-}
+couple.onclick=function(){
 
-/* Petals */
-for(let i=0;i<20;i++){
-  let petal=document.createElement("div");
-  petal.className="petal";
-  petal.innerHTML="🌸";
-  petal.style.left=Math.random()*100+"vw";
-  petal.style.animationDuration=(5+Math.random()*5)+"s";
-  document.body.appendChild(petal);
-}
-
-/* Hug Action */
-document.getElementById("couple").onclick=function(){
-  this.classList.add("hug");
+  boy.classList.add("hugBoy","hugGlow","beat");
+  girl.classList.add("hugGirl","hugGlow","beat");
   document.querySelector(".hint").style.display="none";
-  document.getElementById("heartbeat").play();
+  heartbeat.play();
+
+  createPetals();
 
   setTimeout(()=>{
-    document.getElementById("diary").style.display="block";
-    setTimeout(()=>{
-      document.getElementById("diary").classList.add("open");
-    },200);
+    diary.style.display="block";
+    setTimeout(()=>diary.classList.add("open"),200);
+    stetho.style.display="block";
   },2000);
 };
 
-function sealHug(){
-  alert("💜 Hug sealed forever 🌙");
+function createPetals(){
+  for(let i=0;i<25;i++){
+    let p=document.createElement("div");
+    p.className="petal";
+    p.innerText="🌸";
+    p.style.left=Math.random()*100+"vw";
+    p.style.animationDuration=(4+Math.random()*3)+"s";
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(),7000);
+  }
 }
-
 </script>
 
 </body>
