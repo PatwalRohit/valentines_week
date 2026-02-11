@@ -9,8 +9,9 @@
 body{
 margin:0;
 overflow:hidden;
-font-family: 'Comic Sans MS', cursive;
-background: linear-gradient(to top, #d8c6f5, #b497e5, #8f6ed5);
+font-family:'Comic Sans MS', cursive;
+background: linear-gradient(to top, #c8a2ff, #b57edc, #9d6ad6);
+height:100vh;
 }
 
 /* 🌙 Moon */
@@ -18,11 +19,12 @@ background: linear-gradient(to top, #d8c6f5, #b497e5, #8f6ed5);
 position:absolute;
 top:60px;
 right:60px;
-width:140px;
-height:140px;
+width:130px;
+height:130px;
 background:#fff2a8;
 border-radius:50%;
 box-shadow:0 0 40px #fff2a8;
+z-index:1;
 }
 
 /* ⭐ Stars */
@@ -30,9 +32,10 @@ box-shadow:0 0 40px #fff2a8;
 position:absolute;
 color:white;
 animation: twinkle 2s infinite alternate;
+z-index:1;
 }
 @keyframes twinkle{
-0%{opacity:0.3;}
+0%{opacity:0.4;}
 100%{opacity:1;}
 }
 
@@ -41,6 +44,7 @@ animation: twinkle 2s infinite alternate;
 position:absolute;
 font-size:20px;
 animation: fall linear infinite;
+z-index:1;
 }
 @keyframes fall{
 0%{transform:translateY(-10vh);}
@@ -54,20 +58,22 @@ top:120px;
 left:-50px;
 font-size:30px;
 animation: fly 12s linear infinite;
+z-index:1;
 }
 @keyframes fly{
 0%{left:-50px;}
 100%{left:110%;}
 }
 
-/* 👩‍❤️‍👨 Cartoon Couple */
+/* 👩‍❤️‍👨 Couple */
 .scene{
 position:absolute;
-bottom:120px;
+bottom:140px;
 width:100%;
 display:flex;
 justify-content:center;
-gap:80px;
+gap:60px;
+z-index:3;
 }
 
 .character{
@@ -79,11 +85,11 @@ cursor:pointer;
 }
 
 .head{
-width:80px;
-height:80px;
+width:75px;
+height:75px;
 background:#ffe0bd;
 border-radius:50%;
-font-size:50px;
+font-size:45px;
 display:flex;
 align-items:center;
 justify-content:center;
@@ -92,7 +98,6 @@ justify-content:center;
 .body{
 width:40px;
 height:70px;
-background:#ff6f91;
 border-radius:20px;
 margin-top:-10px;
 }
@@ -100,48 +105,50 @@ margin-top:-10px;
 .male .body{background:#4a90e2;}
 .female .body{background:#ff6fb5;}
 
-/* Hug Animation */
-.hug{
-transform:translateX(40px);
-}
+/* Hug Movement */
+.hugLeft{ transform:translateX(30px); }
+.hugRight{ transform:translateX(-30px); }
 
-.hug2{
-transform:translateX(-40px);
-}
-
+/* 💜 Heart Burst */
 .heartBurst{
 position:absolute;
-bottom:200px;
+bottom:260px;
 left:50%;
 transform:translateX(-50%);
 font-size:50px;
 animation: pop 1s ease forwards;
+z-index:4;
 }
 @keyframes pop{
 0%{opacity:0; transform:translate(-50%,20px) scale(0.5);}
-100%{opacity:1; transform:translate(-50%,-60px) scale(1.5);}
+100%{opacity:1; transform:translate(-50%,-50px) scale(1.5);}
 }
 
-/* Diary Popup */
+/* 📔 Diary Popup */
 .diary{
-position:fixed;
-top:50%;
+position:absolute;
+top:120px;
 left:50%;
-transform:translate(-50%,-50%);
-background:white;
-padding:30px;
+transform:translateX(-50%);
+background:#f5ecff;
+padding:25px;
 border-radius:20px;
-width:300px;
+width:280px;
 text-align:center;
 box-shadow:0 10px 30px rgba(0,0,0,0.2);
 display:none;
+z-index:2;
+}
+
+.diary h2{
+margin-top:0;
 }
 
 .button{
-margin-top:20px;
-background:#b497e5;
+margin-top:15px;
+background:#b57edc;
 color:white;
-padding:10px 20px;
+padding:8px 18px;
 border-radius:20px;
 cursor:pointer;
 }
@@ -153,7 +160,6 @@ cursor:pointer;
 <div class="moon"></div>
 <div class="fairy">🧚</div>
 
-<!-- Cartoon Couple -->
 <div class="scene">
 <div class="character male" onclick="hug()">
 <div class="head">😊</div>
@@ -166,25 +172,23 @@ cursor:pointer;
 </div>
 </div>
 
-<!-- Diary -->
 <div class="diary" id="diary">
 <h2>Happy Hug Day My Moon 🌙💜</h2>
 <p>
-In this lavender sky with fairy blessings,
+In this lavender sky with fairy blessings,  
 I promise to hug you whenever life feels heavy 💓
 </p>
 <div class="button" onclick="closeDiary()">Close</div>
 </div>
 
-<!-- Heartbeat Sound -->
 <audio id="beat">
 <source src="https://www.soundjay.com/human/heartbeat-01a.mp3">
 </audio>
 
 <script>
 
-/* ⭐ Create Stars */
-for(let i=0;i<50;i++){
+/* ⭐ Stars */
+for(let i=0;i<40;i++){
 let star=document.createElement("div");
 star.className="star";
 star.innerHTML="✦";
@@ -194,20 +198,20 @@ star.style.fontSize=(8+Math.random()*10)+"px";
 document.body.appendChild(star);
 }
 
-/* 🌸 Create Petals */
-for(let i=0;i<20;i++){
+/* 🌸 Petals */
+for(let i=0;i<15;i++){
 let petal=document.createElement("div");
 petal.className="petal";
 petal.innerHTML="🌸";
 petal.style.left=Math.random()*100+"vw";
-petal.style.animationDuration=(5+Math.random()*5)+"s";
+petal.style.animationDuration=(6+Math.random()*5)+"s";
 document.body.appendChild(petal);
 }
 
-/* 🤗 Hug Animation */
+/* 🤗 Hug */
 function hug(){
-document.querySelector(".male").classList.add("hug");
-document.querySelector(".female").classList.add("hug2");
+document.querySelector(".male").classList.add("hugLeft");
+document.querySelector(".female").classList.add("hugRight");
 
 let heart=document.createElement("div");
 heart.className="heartBurst";
@@ -215,10 +219,7 @@ heart.innerHTML="💜";
 document.body.appendChild(heart);
 
 document.getElementById("beat").play();
-
-setTimeout(()=>{
 document.getElementById("diary").style.display="block";
-},1000);
 }
 
 function closeDiary(){
