@@ -3,202 +3,209 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Hug Day 💜</title>
+<title>Hug Day 💜</title>
 
 <style>
 body{
-    margin:0;
-    overflow:hidden;
-    font-family:'Comic Sans MS', cursive;
-    background:linear-gradient(to top,#c8a2ff,#e6ccff,#c8a2ff);
+margin:0;
+overflow:hidden;
+font-family: 'Segoe UI', sans-serif;
+background: linear-gradient(to bottom, #c8a2ff, #e6ccff);
+height:100vh;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:flex-end;
 }
 
-/* Moon */
-.moon{
-    position:absolute;
-    top:60px;
-    right:60px;
-    width:140px;
-    height:140px;
-    background:#fff8b0;
-    border-radius:50%;
-    box-shadow:0 0 40px #fff6a0;
-    z-index:2;
-}
-
-/* Fairy */
-.fairy{
-    position:absolute;
-    top:120px;
-    right:140px;
-    font-size:30px;
-    animation:fly 4s infinite ease-in-out alternate;
-    z-index:3;
-}
-@keyframes fly{
-    from{ transform:translateY(0px);}
-    to{ transform:translateY(-25px);}
-}
-
-/* Floating petals */
+/* 🌸 Floating petals */
 .petal{
-    position:absolute;
-    font-size:22px;
-    animation:fall linear infinite;
-    z-index:4;
-}
-@keyframes fall{
-    0%{ transform:translateY(-50px);}
-    100%{ transform:translateY(100vh);}
+position:absolute;
+font-size:20px;
+animation: fall 10s linear infinite;
 }
 
-/* Couple */
+@keyframes fall{
+0%{transform:translateY(-50px);}
+100%{transform:translateY(100vh);}
+}
+
+/* 🌕 Moon */
+.moon{
+position:absolute;
+top:60px;
+width:120px;
+height:120px;
+background:#fff5b7;
+border-radius:50%;
+box-shadow:0 0 40px #fff5b7;
+}
+
+/* 🧚 Fairy */
+.fairy{
+position:absolute;
+top:100px;
+left:20%;
+font-size:30px;
+animation: fly 6s infinite alternate ease-in-out;
+}
+
+@keyframes fly{
+from{transform:translateX(0);}
+to{transform:translateX(200px);}
+}
+
+/* 👩‍❤️‍👨 Couple */
 .couple{
-    position:absolute;
-    bottom:120px;
-    left:50%;
-    transform:translateX(-50%);
-    font-size:70px;
-    cursor:pointer;
-    transition:0.6s;
-    z-index:10;
+display:flex;
+gap:40px;
+font-size:60px;
+margin-bottom:120px;
+cursor:pointer;
+transition:0.5s;
+position:relative;
+z-index:2;
+}
+
+/* Hug animation */
+.hug .boy{
+transform:translateX(20px);
+}
+.hug .girl{
+transform:translateX(-20px);
 }
 .hug{
-    transform:translateX(-50%) scale(1.2);
+animation:hugmove 1s forwards;
 }
 
-/* Text */
-.message{
-    position:absolute;
-    bottom:50px;
-    width:100%;
-    text-align:center;
-    font-size:22px;
-    color:#4b0082;
-    z-index:15;
+@keyframes hugmove{
+0%{gap:40px;}
+100%{gap:0px;}
 }
 
-/* Diary */
+/* 💖 Hearts */
+.heart{
+position:absolute;
+font-size:20px;
+animation: float 2s ease-out forwards;
+}
+
+@keyframes float{
+0%{opacity:1; transform:translateY(0);}
+100%{opacity:0; transform:translateY(-80px);}
+}
+
+/* 📔 Diary */
 .diary{
-    position:absolute;
-    bottom:200px;
-    left:20px;
-    width:120px;
-    height:90px;
-    background:#fff;
-    border-radius:6px;
-    box-shadow:0 0 15px rgba(0,0,0,0.3);
-    perspective:800px;
-    z-index:6;
+position:absolute;
+left:20px;
+bottom:200px;
+width:140px;
+height:120px;
+background:#f3d1e8;
+border-radius:10px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:14px;
+text-align:center;
+padding:10px;
+cursor:pointer;
+transition:0.5s;
+box-shadow:0 5px 15px rgba(0,0,0,0.2);
 }
-.page{
-    width:100%;
-    height:100%;
-    background:#ffe6f2;
-    position:absolute;
-    transform-origin:left;
-    animation:flip 5s infinite;
+
+.diary.open{
+width:260px;
+height:200px;
+background:white;
 }
+
+.diary-text{
+display:none;
+}
+
+.diary.open .diary-text{
+display:block;
+animation: flip 0.6s ease;
+}
+
 @keyframes flip{
-    0%{ transform:rotateY(0);}
-    50%{ transform:rotateY(-160deg);}
-    100%{ transform:rotateY(0);}
+from{transform:rotateY(90deg);}
+to{transform:rotateY(0deg);}
 }
 
-/* Stethoscope */
-.steth{
-    position:absolute;
-    bottom:230px;
-    right:30px;
-    font-size:28px;
-    animation:pulse 1.5s infinite;
-    z-index:7;
-}
-@keyframes pulse{
-    0%{ transform:scale(1);}
-    50%{ transform:scale(1.2);}
-    100%{ transform:scale(1);}
+/* ✨ Instruction */
+.instruction{
+position:absolute;
+bottom:60px;
+font-style:italic;
+color:#5e2b97;
 }
 
-/* Popup */
-.popup{
-    position:absolute;
-    top:40%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    background:#fff;
-    padding:25px;
-    border-radius:15px;
-    box-shadow:0 0 20px rgba(0,0,0,0.3);
-    display:none;
-    text-align:center;
-    z-index:20;
-}
-button{
-    padding:8px 15px;
-    border:none;
-    background:#c8a2ff;
-    border-radius:10px;
-    cursor:pointer;
-}
 </style>
 </head>
-
 <body>
 
 <div class="moon"></div>
-<div class="fairy">🧚</div>
+<div class="fairy">🧚‍♀️</div>
 
-<div class="diary">
-   <div class="page"></div>
+<!-- Floating petals -->
+<script>
+for(let i=0;i<20;i++){
+let petal=document.createElement("div");
+petal.className="petal";
+petal.innerHTML="🌸";
+petal.style.left=Math.random()*100+"vw";
+petal.style.animationDuration=(5+Math.random()*5)+"s";
+document.body.appendChild(petal);
+}
+</script>
+
+<!-- Diary -->
+<div class="diary" onclick="openDiary()" id="diary">
+📔 Tap Diary
+<div class="diary-text">
+<b>My Moon 🌙💜</b><br><br>
+In this lavender sky,<br>
+I promise to hug you<br>
+whenever life feels heavy.<br><br>
+Always with care,<br>
+respect & warmth 💞
+</div>
 </div>
 
-<div class="steth">🩺</div>
-
-<div class="couple" id="couple">🧍‍♂️🧍‍♀️</div>
-
-<div class="message">Tap the couple to hug 💞</div>
-
-<div class="popup" id="popup">
-   <h2>Happy Hug Day My Moon 🌙💜</h2>
-   <p>
-   In this lavender sky,  
-   with fairy blessings and moonlight glow,  
-   I promise to hug you  
-   whenever life feels heavy 💓  
-   </p>
-   <button onclick="closePopup()">Close</button>
+<!-- Couple -->
+<div class="couple" onclick="hug()" id="couple">
+<div class="boy">👨</div>
+<div class="girl">👩</div>
 </div>
 
-<audio id="heartbeat" loop>
-  <source src="https://www.soundjay.com/human/heartbeat-01a.mp3" type="audio/mpeg">
-</audio>
+<div class="instruction">Tap the couple to hug 💕</div>
 
 <script>
-/* Generate petals */
-for(let i=0;i<20;i++){
-   let petal=document.createElement("div");
-   petal.className="petal";
-   petal.innerHTML="🌸";
-   petal.style.left=Math.random()*100+"vw";
-   petal.style.animationDuration=(5+Math.random()*5)+"s";
-   document.body.appendChild(petal);
-}
 
+function hug(){
 let couple=document.getElementById("couple");
-let popup=document.getElementById("popup");
-let heartbeat=document.getElementById("heartbeat");
+couple.classList.add("hug");
 
-couple.addEventListener("click",function(){
-   couple.classList.add("hug");
-   heartbeat.play();
-   popup.style.display="block";
-});
+/* Floating hearts */
+for(let i=0;i<8;i++){
+let heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="💖";
+heart.style.left=(window.innerWidth/2 + (Math.random()*100-50))+"px";
+heart.style.top=(window.innerHeight-200)+"px";
+document.body.appendChild(heart);
 
-function closePopup(){
-   popup.style.display="none";
-   heartbeat.pause();
+setTimeout(()=>heart.remove(),2000);
 }
+}
+
+function openDiary(){
+document.getElementById("diary").classList.toggle("open");
+}
+
 </script>
 
 </body>
