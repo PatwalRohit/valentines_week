@@ -5,11 +5,13 @@
 <title>Happy Hug Day 💜</title>
 
 <style>
-body{
+html,body{
 margin:0;
+padding:0;
+height:100%;
 overflow:hidden;
-font-family: 'Segoe UI', sans-serif;
-background: linear-gradient(to bottom,#d8c8f5,#b497e5);
+font-family:'Segoe UI',sans-serif;
+background: linear-gradient(180deg,#e6d6ff 0%,#c6a8ff 100%);
 }
 
 /* 🌙 Moon */
@@ -22,6 +24,16 @@ height:140px;
 background:#fff3b0;
 border-radius:50%;
 box-shadow:0 0 40px #fff3b0;
+transition:1s;
+}
+
+/* Glow animation */
+.glow{
+animation:moonPulse 1.2s ease-in-out infinite alternate;
+}
+@keyframes moonPulse{
+from{box-shadow:0 0 40px #fff3b0;}
+to{box-shadow:0 0 80px #fff3b0;}
 }
 
 /* ⭐ Stars */
@@ -34,7 +46,7 @@ border-radius:50%;
 animation: twinkle 2s infinite alternate;
 }
 @keyframes twinkle{
-from{opacity:0.2;}
+from{opacity:0.3;}
 to{opacity:1;}
 }
 
@@ -42,7 +54,7 @@ to{opacity:1;}
 .petal{
 position:absolute;
 font-size:20px;
-animation: fall 10s linear infinite;
+animation: fall linear infinite;
 }
 @keyframes fall{
 0%{transform:translateY(-10vh);}
@@ -77,49 +89,88 @@ z-index:2;
 display:flex;
 flex-direction:column;
 align-items:center;
-transition:1s;
+transition:0.8s;
+position:relative;
 }
 
-/* Big head */
+/* Head */
 .head{
 width:80px;
 height:80px;
 background:#ffd9b3;
 border-radius:50%;
+position:relative;
 }
 
-/* Small body */
+/* Eyes */
+.eye{
+width:8px;
+height:8px;
+background:black;
+border-radius:50%;
+position:absolute;
+top:30px;
+animation: blink 4s infinite;
+}
+.leftEye{ left:22px; }
+.rightEye{ right:22px; }
+
+@keyframes blink{
+0%,90%,100%{height:8px;}
+95%{height:1px;}
+}
+
+/* Blush */
+.blush{
+width:18px;
+height:10px;
+background:pink;
+border-radius:50%;
+position:absolute;
+top:45px;
+opacity:0;
+transition:0.5s;
+}
+.leftBlush{ left:15px; }
+.rightBlush{ right:15px; }
+
+/* Body */
 .body{
 width:45px;
 height:80px;
 border-radius:25px;
 margin-top:-10px;
 }
-
 .male .body{background:#6fa8dc;}
 .female .body{background:#ff8dc7;}
 
 /* Hug animation */
 .hugLeft{
-transform:translateX(40px) rotate(-10deg);
+transform:translateX(40px) rotate(-10deg) scale(1.05);
 }
 .hugRight{
-transform:translateX(-40px) rotate(10deg);
+transform:translateX(-40px) rotate(10deg) scale(1.05);
 }
 
-/* 💜 Heart burst */
-.heartBurst{
-position:absolute;
-font-size:50px;
-bottom:220px;
-left:50%;
-transform:translateX(-50%);
-animation: pop 1s ease-out forwards;
-z-index:3;
+/* Bounce */
+.bounce{
+animation: bounce 0.6s ease;
 }
-@keyframes pop{
-0%{transform:translateX(-50%) scale(0);}
-100%{transform:translateX(-50%) scale(1.4); opacity:0;}
+@keyframes bounce{
+0%{transform:scale(1);}
+50%{transform:scale(1.15);}
+100%{transform:scale(1.05);}
+}
+
+/* 💞 Heart particles */
+.heart{
+position:absolute;
+font-size:20px;
+animation: floatUp 2s linear forwards;
+}
+@keyframes floatUp{
+0%{opacity:1; transform:translateY(0);}
+100%{opacity:0; transform:translateY(-120px);}
 }
 
 /* 💬 Hint */
@@ -130,8 +181,7 @@ width:100%;
 text-align:center;
 font-size:18px;
 color:white;
-animation: floatHint 2s ease-in-out infinite;
-z-index:2;
+animation: floatHint 2s infinite;
 }
 @keyframes floatHint{
 0%{transform:translateY(0);}
@@ -139,7 +189,7 @@ z-index:2;
 100%{transform:translateY(0);}
 }
 
-/* 📔 Diary popup */
+/* 📔 Diary */
 .diary{
 position:fixed;
 top:50%;
@@ -177,9 +227,8 @@ font-size:16px;
 
 <body>
 
-<div class="moon"></div>
+<div class="moon" id="moon"></div>
 
-<!-- Stars -->
 <script>
 for(let i=0;i<40;i++){
 let s=document.createElement("div");
@@ -189,10 +238,7 @@ s.style.left=Math.random()*100+"vw";
 s.style.animationDuration=(1+Math.random()*2)+"s";
 document.body.appendChild(s);
 }
-</script>
 
-<!-- Petals -->
-<script>
 for(let i=0;i<25;i++){
 let p=document.createElement("div");
 p.className="petal";
@@ -205,15 +251,24 @@ document.body.appendChild(p);
 
 <div class="fairy">🧚</div>
 
-<!-- Couple -->
 <div class="couple" onclick="hug()">
-<div class="person male">
-<div class="head"></div>
+<div class="person male" id="male">
+<div class="head">
+<div class="eye leftEye"></div>
+<div class="eye rightEye"></div>
+<div class="blush leftBlush"></div>
+<div class="blush rightBlush"></div>
+</div>
 <div class="body"></div>
 </div>
 
-<div class="person female">
-<div class="head"></div>
+<div class="person female" id="female">
+<div class="head">
+<div class="eye leftEye"></div>
+<div class="eye rightEye"></div>
+<div class="blush leftBlush"></div>
+<div class="blush rightBlush"></div>
+</div>
 <div class="body"></div>
 </div>
 </div>
@@ -222,7 +277,6 @@ document.body.appendChild(p);
 Tap the couple to hug 💕
 </div>
 
-<!-- Diary -->
 <div class="diary" id="diary">
 <h2>Happy Hug Day My Moon 🌙💜</h2>
 <p>
@@ -234,18 +288,30 @@ whenever life feels heavy 💞
 <button class="closeBtn" onclick="closeDiary()">Close</button>
 </div>
 
-<!-- Heartbeat sound -->
 <audio id="beat" src="https://www.soundjay.com/human/heartbeat-01a.mp3"></audio>
 
 <script>
 function hug(){
-document.querySelector(".male").classList.add("hugLeft");
-document.querySelector(".female").classList.add("hugRight");
+let male=document.getElementById("male");
+let female=document.getElementById("female");
+let moon=document.getElementById("moon");
 
+male.classList.add("hugLeft","bounce");
+female.classList.add("hugRight","bounce");
+
+moon.classList.add("glow");
+
+document.querySelectorAll(".blush").forEach(b=>b.style.opacity=1);
+
+for(let i=0;i<15;i++){
 let heart=document.createElement("div");
-heart.className="heartBurst";
+heart.className="heart";
 heart.innerHTML="💜";
+heart.style.left=(window.innerWidth/2 + (Math.random()*100-50))+"px";
+heart.style.bottom="200px";
 document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),2000);
+}
 
 document.getElementById("beat").play();
 document.getElementById("diary").style.display="block";
