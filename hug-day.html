@@ -40,13 +40,14 @@ body{
 
 /* Couple */
 .couple{
-  position:absolute;
   bottom:120px;
   left:50%;
   transform:translateX(-50%);
   font-size:90px;
   cursor:pointer;
   transition:0.5s;
+   z-index: 10;
+  position: relative;
 }
 .hug{
   animation: glow 1s infinite alternate;
@@ -113,6 +114,9 @@ body{
   font-size:18px;
   line-height:1.6;
   margin-top:20px;
+   background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(6px);
+  z-index: 5;
 }
 
 /* Stethoscope */
