@@ -11,8 +11,8 @@ body{
   height:100vh;
   font-family: Arial, sans-serif;
   overflow:hidden;
-  background:#ffffff;
-  transition:background 1.5s ease;
+  background:#fff;
+  transition:1.5s ease;
 }
 
 /* Center Utility */
@@ -34,7 +34,7 @@ body{
   color:#666;
 }
 
-/* 🌙 Moon */
+/* Moon */
 .moon{
   position:absolute;
   top:30px;
@@ -47,130 +47,160 @@ body{
   display:none;
   align-items:center;
   justify-content:center;
-  font-size:30px;
+  font-size:28px;
   animation:moonPulse 4s infinite;
 }
 @keyframes moonPulse{
   0%,100%{box-shadow:0 0 20px #ffd86b;}
-  50%{box-shadow:0 0 40px #ffd86b;}
+  50%{box-shadow:0 0 35px #ffd86b;}
 }
 
-/* 📖 Diary */
+/* Diary */
 .diary{
-  width:230px;
+  width:240px;
   padding:20px;
   background:#fff;
   border-radius:14px;
-  box-shadow:0 0 30px rgba(0,0,0,0.15);
+  box-shadow:0 0 30px rgba(0,0,0,0.2);
   display:none;
 }
 .diary h3{
-  margin:0 0 12px;
+  margin:0 0 10px;
   color:#b56bd6;
 }
 .page{
-  font-size:16px;
-  color:#333;
   min-height:60px;
+  font-size:16px;
 }
 
-/* ⭐ Stars */
+/* Stars */
 .star{
   position:absolute;
   top:50%;
   font-size:22px;
-  color:#fff;
   display:none;
 }
 .star.left{ left:20%; }
 .star.right{ right:20%; }
 
-.moveLeft{
-  animation:moveLeft 2.5s forwards;
+.moveStars{
+  animation:merge 2s forwards;
 }
-.moveRight{
-  animation:moveRight 2.5s forwards;
-}
-
-@keyframes moveLeft{
-  to{ left:45%; }
-}
-@keyframes moveRight{
-  to{ right:45%; }
+@keyframes merge{
+  to{
+    left:48%;
+    right:48%;
+  }
 }
 
-/* 💍 Thread */
+/* Thread */
 .thread{
   width:160px;
   height:6px;
   background:#c1121f;
   border-radius:10px;
   margin:auto;
-  box-shadow:0 0 12px rgba(193,18,31,.6);
   display:none;
-  animation:threadGlow 2.5s infinite;
+  box-shadow:0 0 15px rgba(193,18,31,0.8);
+  animation:threadGlow 2s infinite;
 }
 @keyframes threadGlow{
   0%,100%{box-shadow:0 0 10px rgba(193,18,31,.6);}
   50%{box-shadow:0 0 25px rgba(193,18,31,1);}
 }
 
-/* 💌 Final Section */
+/* Rose Fall */
+.fall{
+  position:absolute;
+  top:-10px;
+  animation:fall linear forwards;
+}
+@keyframes fall{
+  to{ transform:translateY(110vh); }
+}
+
+/* Pinky Promise */
+.pinky-scene{
+  position:absolute;
+  top:55%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  display:flex;
+  gap:40px;
+  align-items:center;
+  display:none;
+}
+
+.hand{
+  width:90px;
+  height:110px;
+  background:#f5d6b4;
+  border-radius:50px;
+  position:relative;
+  transition:0.8s ease;
+  box-shadow:0 8px 20px rgba(0,0,0,0.2);
+}
+
+.left-hand{ transform:rotate(-10deg); }
+.right-hand{ transform:rotate(10deg); }
+
+.pinky{
+  position:absolute;
+  top:-30px;
+  left:50%;
+  transform:translateX(-50%);
+  width:16px;
+  height:45px;
+  background:#f5d6b4;
+  border-radius:20px;
+}
+
+.pinky-scene.connected .left-hand{
+  transform:rotate(-3deg) translateX(10px);
+}
+.pinky-scene.connected .right-hand{
+  transform:rotate(3deg) translateX(-10px);
+}
+
+.pinky-scene.connected{
+  animation:bounce 0.6s ease;
+}
+
+@keyframes bounce{
+  0%{transform:translate(-50%,-50%) scale(1);}
+  50%{transform:translate(-50%,-52%) scale(1.05);}
+  100%{transform:translate(-50%,-50%) scale(1);}
+}
+
+.promise-heart{
+  font-size:30px;
+  opacity:0;
+  transition:0.5s ease;
+}
+.pinky-scene.connected .promise-heart{
+  opacity:1;
+  animation:heartGlow 1.5s infinite;
+}
+@keyframes heartGlow{
+  0%,100%{text-shadow:0 0 10px pink;}
+  50%{text-shadow:0 0 25px hotpink;}
+}
+
+.sparkle{
+  position:absolute;
+  font-size:18px;
+  animation:sparkleAnim 1s forwards;
+}
+@keyframes sparkleAnim{
+  0%{opacity:1; transform:scale(1);}
+  100%{opacity:0; transform:translateY(-30px) scale(1.8);}
+}
+
+/* Final Text */
 .final{
   display:none;
   font-size:22px;
   color:#e91e63;
-}
-
-.highlight{
-  margin-top:15px;
-  font-size:14px;
-  color:#444;
-}
-
-.pinkyWrap{
-  margin-top:20px;
-  display:none;
-  justify-content:center;
-  align-items:center;
-  gap:10px;
-}
-
-.hand{
-  width:40px;
-  height:40px;
-  background:#ffddb8;
-  border-radius:10px;
-  position:relative;
-}
-
-.finger{
-  width:8px;
-  height:22px;
-  background:#ffddb8;
-  border-radius:10px;
-  position:absolute;
-  top:-18px;
-  left:16px;
-}
-
-.link{
-  animation:linkPromise 1.5s forwards;
-}
-
-@keyframes linkPromise{
-  0%{ transform:translateX(0); }
-  100%{ transform:translateX(-6px); }
-}
-
-/* 🌹 Falling Roses */
-.fall{
-  position:absolute;
-  top:-10px;
-  animation:fall linear infinite;
-}
-@keyframes fall{
-  to{ transform:translateY(110vh); }
 }
 </style>
 </head>
@@ -179,128 +209,126 @@ body{
 
 <div class="moon" id="moon">😊</div>
 
-<!-- Scene 1 -->
 <div class="center" id="sceneText">
-  <p style="font-size:18px;color:#444;">
+  <p style="font-size:18px;">
     Promises don’t need noise.<br>
     They need sincerity.
   </p>
 </div>
 
-<!-- Scene 2 Diary -->
 <div class="center diary" id="diary">
   <h3>Niyati</h3>
   <div class="page" id="pageText"></div>
 </div>
 
-<!-- Stars -->
 <div class="star left" id="starL">⭐</div>
 <div class="star right" id="starR">⭐</div>
 
-<!-- Thread -->
 <div class="center">
   <div class="thread" id="thread"></div>
 </div>
 
-<!-- Final -->
+<div class="pinky-scene" id="pinkyScene">
+  <div class="hand left-hand"><div class="pinky"></div></div>
+  <div class="promise-heart">💖</div>
+  <div class="hand right-hand"><div class="pinky"></div></div>
+</div>
+
 <div class="center final" id="finalMsg">
-  Happy Promise Day<br>
-  <b style="font-size:26px;">Niyati</b> 🌙
-
-  <div class="highlight">
-    🌸 Your kindness.<br>
-    🌙 Your strength.<br>
-    ✨ Your calm heart.
-  </div>
-
-  <div class="pinkyWrap" id="pinky">
-    <div class="hand">
-      <div class="finger"></div>
-    </div>
-    <div class="hand link">
-      <div class="finger"></div>
-    </div>
-  </div>
-
-  <div style="margin-top:10px;font-size:14px;color:#555;">
+  🤍 Promise Sealed <br><br>
+  Happy Promise Day <b>Niyati</b> 🌙<br>
+  <span style="font-size:15px;color:#555;">
     No pressure. Just a promise.
-  </div>
+  </span>
 </div>
 
 <div class="hint" id="hint">👉 Tap anywhere to continue</div>
 
 <script>
-let step = 0;
-let page = 0;
+let step=0;
+let page=0;
 
-const promises = [
-  "🌸 I promise patience.",
-  "🤍 I promise respect.",
-  "🌙 I promise honesty.",
-  "✨ I promise to be kind."
+const promises=[
+"🌸 I promise patience.",
+"🤍 I promise respect.",
+"🌙 I promise honesty.",
+"✨ I promise to always value your kindness."
 ];
 
-document.body.onclick = () => {
-
-  if(step === 0){
-    document.body.style.background = "radial-gradient(circle at top,#0c1445,#020617)";
-    sceneText.style.display = "none";
-    diary.style.display = "block";
-    moon.style.display = "flex";
-    pageText.innerText = promises[page];
-    hint.innerText = "📖 Tap to flip the page";
-    step++;
-  }
-
-  else if(step === 1){
-    page++;
-    if(page < promises.length){
-      pageText.innerText = promises[page];
-    } else {
-      diary.style.display = "none";
-      starL.style.display = "block";
-      starR.style.display = "block";
-      hint.innerText = "⭐ Tap to bring the stars closer";
-      step++;
-    }
-  }
-
-  else if(step === 2){
-    starL.classList.add("moveLeft");
-    starR.classList.add("moveRight");
-    hint.innerText = "💍 Tap to seal the promise";
-    step++;
-  }
-
-  else if(step === 3){
-    starL.style.display = "none";
-    starR.style.display = "none";
-    thread.style.display = "block";
-    dropRoses();
-    hint.innerText = "🌹 One last tap";
-    step++;
-  }
-
-  else if(step === 4){
-    thread.style.display = "none";
-    finalMsg.style.display = "block";
-    document.getElementById("pinky").style.display="flex";
-    hint.innerText = "🤍 Promise sealed";
-    step++;
-  }
+document.body.onclick=()=>{
+if(step===0){
+document.body.style.background="radial-gradient(circle at top,#0c1445,#020617)";
+sceneText.style.display="none";
+diary.style.display="block";
+moon.style.display="flex";
+pageText.innerText=promises[page];
+hint.innerText="📖 Tap to flip the page";
+step++;
+}
+else if(step===1){
+page++;
+if(page<promises.length){
+pageText.innerText=promises[page];
+}else{
+diary.style.display="none";
+starL.style.display="block";
+starR.style.display="block";
+hint.innerText="⭐ Tap to bring stars closer";
+step++;
+}
+}
+else if(step===2){
+starL.classList.add("moveStars");
+starR.classList.add("moveStars");
+hint.innerText="💍 Tap to seal promise";
+step++;
+}
+else if(step===3){
+starL.style.display="none";
+starR.style.display="none";
+thread.style.display="block";
+dropRoses();
+hint.innerText="🤝 One last step";
+step++;
+}
+else if(step===4){
+thread.style.display="none";
+pinkyScene.style.display="flex";
+hint.innerText="💍 Tap to connect pinky";
+step++;
+}
+else if(step===5){
+pinkyScene.classList.add("connected");
+sparkle();
+hint.innerText="🤍 Promise sealed";
+setTimeout(()=>{finalMsg.style.display="block";},1200);
+step++;
+}
 };
 
 function dropRoses(){
-  for(let i=0;i<30;i++){
-    const r=document.createElement("div");
-    r.className="fall";
-    r.innerText="🌹";
-    r.style.left=Math.random()*100+"vw";
-    r.style.fontSize="20px";
-    r.style.animationDuration=(3+Math.random()*3)+"s";
-    document.body.appendChild(r);
-    setTimeout(()=>r.remove(),6000);
-  }
+for(let i=0;i<25;i++){
+const r=document.createElement("div");
+r.className="fall";
+r.innerText="🌹";
+r.style.left=Math.random()*100+"vw";
+r.style.fontSize="20px";
+r.style.animationDuration=(3+Math.random()*3)+"s";
+document.body.appendChild(r);
+setTimeout(()=>r.remove(),6000);
+}
+}
+
+function sparkle(){
+for(let i=0;i<6;i++){
+const s=document.createElement("div");
+s.className="sparkle";
+s.innerText="✨";
+s.style.left="50%";
+s.style.top="50%";
+document.body.appendChild(s);
+setTimeout(()=>s.remove(),1000);
+}
 }
 </script>
 
