@@ -77,12 +77,12 @@ to{transform:translateX(40px);}
 /* 💑 Couple */
 .couple{
 position:absolute;
-bottom:140px;
+bottom:90px;
 width:100%;
 display:flex;
 justify-content:center;
 gap:80px;
-z-index:2;
+z-index:10; /* higher than popup */
 }
 
 .person{
@@ -122,15 +122,27 @@ animation: blink 4s infinite;
 
 /* Blush */
 .blush{
-width:18px;
-height:10px;
-background:pink;
+width:20px;
+height:12px;
 border-radius:50%;
 position:absolute;
-top:45px;
+top:48px;
 opacity:0;
 transition:0.5s;
 }
+
+/* Boy blush */
+.male .leftBlush,
+.male .rightBlush{
+background:#ff9aa2;
+}
+
+/* Girl blush - deeper red */
+.female .leftBlush,
+.female .rightBlush{
+background:#ff4d6d;
+}
+
 .leftBlush{ left:15px; }
 .rightBlush{ right:15px; }
 
@@ -176,12 +188,13 @@ animation: floatUp 2s linear forwards;
 /* 💬 Hint */
 .hint{
 position:absolute;
-bottom:80px;
+bottom:30px;
 width:100%;
 text-align:center;
 font-size:18px;
 color:white;
 animation: floatHint 2s infinite;
+z-index:11;
 }
 @keyframes floatHint{
 0%{transform:translateY(0);}
@@ -189,10 +202,10 @@ animation: floatHint 2s infinite;
 100%{transform:translateY(0);}
 }
 
-/* 📔 Diary */
+/* 📔 Diary Popup (shifted upward) */
 .diary{
 position:fixed;
-top:50%;
+top:35%;  /* moved up */
 left:50%;
 transform:translate(-50%,-50%);
 width:85%;
@@ -203,7 +216,7 @@ border-radius:20px;
 box-shadow:0 10px 40px rgba(0,0,0,0.3);
 text-align:center;
 display:none;
-z-index:5;
+z-index:5; /* lower than couple */
 }
 
 .diary h2{
@@ -288,8 +301,6 @@ whenever life feels heavy 💞
 <button class="closeBtn" onclick="closeDiary()">Close</button>
 </div>
 
-<audio id="beat" src="https://www.soundjay.com/human/heartbeat-01a.mp3"></audio>
-
 <script>
 function hug(){
 let male=document.getElementById("male");
@@ -313,7 +324,6 @@ document.body.appendChild(heart);
 setTimeout(()=>heart.remove(),2000);
 }
 
-document.getElementById("beat").play();
 document.getElementById("diary").style.display="block";
 document.getElementById("hintText").style.display="none";
 }
