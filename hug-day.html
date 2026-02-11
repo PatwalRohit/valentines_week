@@ -142,6 +142,19 @@ bottom:60px;
 font-style:italic;
 color:#5e2b97;
 }
+  /* ⭐ Stars */
+.star{
+position:absolute;
+color:white;
+font-size:12px;
+animation: twinkle 2s infinite ease-in-out alternate;
+opacity:0.8;
+}
+
+@keyframes twinkle{
+0%{opacity:0.3; transform:scale(0.8);}
+100%{opacity:1; transform:scale(1.2);}
+}
 
 </style>
 </head>
@@ -159,6 +172,17 @@ petal.innerHTML="🌸";
 petal.style.left=Math.random()*100+"vw";
 petal.style.animationDuration=(5+Math.random()*5)+"s";
 document.body.appendChild(petal);
+}
+  /* ⭐ Create Stars */
+for(let i=0;i<40;i++){
+let star=document.createElement("div");
+star.className="star";
+star.innerHTML="✦";
+star.style.left=Math.random()*100+"vw";
+star.style.top=Math.random()*60+"vh";
+star.style.fontSize=(8+Math.random()*8)+"px";
+star.style.animationDuration=(1+Math.random()*2)+"s";
+document.body.appendChild(star);
 }
 </script>
 
