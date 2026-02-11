@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Hug Day 💜</title>
+
+<style>
+body{
+margin:0;
+overflow:hidden;
+font-family: 'Comic Sans MS', cursive;
+background: linear-gradient(to top, #d8c6f5, #b497e5, #8f6ed5);
+}
+
+/* 🌙 Moon */
+.moon{
+position:absolute;
+top:60px;
+right:60px;
+width:140px;
+height:140px;
+background:#fff2a8;
+border-radius:50%;
+box-shadow:0 0 40px #fff2a8;
+}
+
+/* ⭐ Stars */
+.star{
+position:absolute;
+color:white;
+animation: twinkle 2s infinite alternate;
+}
+@keyframes twinkle{
+0%{opacity:0.3;}
+100%{opacity:1;}
+}
+
+/* 🌸 Petals */
+.petal{
+position:absolute;
+font-size:20px;
+animation: fall linear infinite;
+}
+@keyframes fall{
+0%{transform:translateY(-10vh);}
+100%{transform:translateY(110vh);}
+}
+
+/* 🧚 Fairy */
+.fairy{
+position:absolute;
+top:120px;
+left:-50px;
+font-size:30px;
+animation: fly 12s linear infinite;
+}
+@keyframes fly{
+0%{left:-50px;}
+100%{left:110%;}
+}
+
+/* 👩‍❤️‍👨 Cartoon Couple */
+.scene{
+position:absolute;
+bottom:120px;
+width:100%;
+display:flex;
+justify-content:center;
+gap:80px;
+}
+
+.character{
+display:flex;
+flex-direction:column;
+align-items:center;
+transition:1s;
+cursor:pointer;
+}
+
+.head{
+width:80px;
+height:80px;
+background:#ffe0bd;
+border-radius:50%;
+font-size:50px;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.body{
+width:40px;
+height:70px;
+background:#ff6f91;
+border-radius:20px;
+margin-top:-10px;
+}
+
+.male .body{background:#4a90e2;}
+.female .body{background:#ff6fb5;}
+
+/* Hug Animation */
+.hug{
+transform:translateX(40px);
+}
+
+.hug2{
+transform:translateX(-40px);
+}
+
+.heartBurst{
+position:absolute;
+bottom:200px;
+left:50%;
+transform:translateX(-50%);
+font-size:50px;
+animation: pop 1s ease forwards;
+}
+@keyframes pop{
+0%{opacity:0; transform:translate(-50%,20px) scale(0.5);}
+100%{opacity:1; transform:translate(-50%,-60px) scale(1.5);}
+}
+
+/* Diary Popup */
+.diary{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:white;
+padding:30px;
+border-radius:20px;
+width:300px;
+text-align:center;
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
+display:none;
+}
+
+.button{
+margin-top:20px;
+background:#b497e5;
+color:white;
+padding:10px 20px;
+border-radius:20px;
+cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="moon"></div>
+<div class="fairy">🧚</div>
+
+<!-- Cartoon Couple -->
+<div class="scene">
+<div class="character male" onclick="hug()">
+<div class="head">😊</div>
+<div class="body"></div>
+</div>
+
+<div class="character female" onclick="hug()">
+<div class="head">🥰</div>
+<div class="body"></div>
+</div>
+</div>
+
+<!-- Diary -->
+<div class="diary" id="diary">
+<h2>Happy Hug Day My Moon 🌙💜</h2>
+<p>
+In this lavender sky with fairy blessings,
+I promise to hug you whenever life feels heavy 💓
+</p>
+<div class="button" onclick="closeDiary()">Close</div>
+</div>
+
+<!-- Heartbeat Sound -->
+<audio id="beat">
+<source src="https://www.soundjay.com/human/heartbeat-01a.mp3">
+</audio>
+
+<script>
+
+/* ⭐ Create Stars */
+for(let i=0;i<50;i++){
+let star=document.createElement("div");
+star.className="star";
+star.innerHTML="✦";
+star.style.left=Math.random()*100+"vw";
+star.style.top=Math.random()*70+"vh";
+star.style.fontSize=(8+Math.random()*10)+"px";
+document.body.appendChild(star);
+}
+
+/* 🌸 Create Petals */
+for(let i=0;i<20;i++){
+let petal=document.createElement("div");
+petal.className="petal";
+petal.innerHTML="🌸";
+petal.style.left=Math.random()*100+"vw";
+petal.style.animationDuration=(5+Math.random()*5)+"s";
+document.body.appendChild(petal);
+}
+
+/* 🤗 Hug Animation */
+function hug(){
+document.querySelector(".male").classList.add("hug");
+document.querySelector(".female").classList.add("hug2");
+
+let heart=document.createElement("div");
+heart.className="heartBurst";
+heart.innerHTML="💜";
+document.body.appendChild(heart);
+
+document.getElementById("beat").play();
+
+setTimeout(()=>{
+document.getElementById("diary").style.display="block";
+},1000);
+}
+
+function closeDiary(){
+document.getElementById("diary").style.display="none";
+}
+</script>
+
+</body>
+</html>
