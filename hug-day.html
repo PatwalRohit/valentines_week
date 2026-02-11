@@ -1,126 +1,142 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hug Day 🌙</title>
+<title>Hug Day 🌙💜</title>
 
 <style>
 body{
-margin:0;
-overflow:hidden;
-font-family: 'Segoe UI', sans-serif;
-background: linear-gradient(to top, #2b1055, #7597de);
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-color:white;
+  margin:0;
+  overflow:hidden;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to bottom,#d8c6f5,#b497e5,#8a6cd1);
 }
 
 /* Moon */
 .moon{
-position:absolute;
-top:60px;
-right:80px;
-width:120px;
-height:120px;
-background:#fff3b0;
-border-radius:50%;
-box-shadow:0 0 40px #fff3b0;
+  position:absolute;
+  top:60px;
+  right:60px;
+  width:140px;
+  height:140px;
+  background:#fff3b0;
+  border-radius:50%;
+  box-shadow:0 0 60px #fff3b0;
 }
 
 /* Stars */
 .star{
-position:absolute;
-width:3px;
-height:3px;
-background:white;
-border-radius:50%;
-animation: twinkle 2s infinite alternate;
+  position:absolute;
+  width:4px;
+  height:4px;
+  background:white;
+  border-radius:50%;
+  animation: twinkle 2s infinite alternate;
 }
 @keyframes twinkle{
-from{opacity:0.2;}
-to{opacity:1;}
+  from{opacity:0.3}
+  to{opacity:1}
 }
 
-/* Couple Silhouette */
+/* Couple */
 .couple{
-position:relative;
-cursor:pointer;
-transition:0.5s;
+  position:absolute;
+  bottom:120px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:90px;
+  cursor:pointer;
+  transition:0.5s;
 }
-
-.person{
-width:120px;
-height:220px;
-background:#000000aa;
-border-radius:60px;
-position:absolute;
-bottom:0;
-}
-
-.boy{
-left:-60px;
-}
-
-.girl{
-left:40px;
-}
-
 .hug{
-box-shadow:0 0 40px pink;
+  animation: glow 1s infinite alternate;
+}
+@keyframes glow{
+  from{filter: drop-shadow(0 0 10px pink);}
+  to{filter: drop-shadow(0 0 30px deeppink);}
 }
 
-/* Floating Hearts */
-.heart{
-position:absolute;
-color:pink;
-font-size:20px;
-animation: float 3s linear infinite;
-}
-@keyframes float{
-from{transform:translateY(0); opacity:1;}
-to{transform:translateY(-200px); opacity:0;}
-}
-
-/* Hint Text */
+/* Hint */
 .hint{
-position:absolute;
-bottom:40px;
-font-size:18px;
-opacity:0.8;
-animation: blink 1.5s infinite;
-}
-@keyframes blink{
-0%,100%{opacity:0.3;}
-50%{opacity:1;}
+  position:absolute;
+  bottom:40px;
+  width:100%;
+  text-align:center;
+  font-size:18px;
+  opacity:0.8;
 }
 
-/* Diary Popup */
+/* Petals */
+.petal{
+  position:absolute;
+  font-size:20px;
+  animation: fall linear infinite;
+}
+@keyframes fall{
+  0%{transform:translateY(-10vh) rotate(0deg);}
+  100%{transform:translateY(110vh) rotate(360deg);}
+}
+
+/* Fairy */
+.fairy{
+  position:absolute;
+  top:150px;
+  left:-100px;
+  font-size:40px;
+  animation: fly 12s linear infinite;
+}
+@keyframes fly{
+  0%{left:-100px; top:200px;}
+  50%{top:120px;}
+  100%{left:110%; top:180px;}
+}
+
+/* Diary */
 .diary{
-position:absolute;
-width:80%;
-max-width:400px;
-background:lavender;
-color:#4b0082;
-padding:20px;
-border-radius:15px;
-display:none;
-text-align:center;
-box-shadow:0 0 20px #fff;
+  position:absolute;
+  width:320px;
+  height:420px;
+  background:#f8eaff;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) rotateY(90deg);
+  border-radius:10px;
+  box-shadow:0 0 40px rgba(0,0,0,0.3);
+  padding:20px;
+  display:none;
+  transition:1s;
+}
+.diary.open{
+  transform:translate(-50%,-50%) rotateY(0deg);
+}
+.promiseText{
+  font-size:18px;
+  line-height:1.6;
+  margin-top:20px;
 }
 
+/* Stethoscope */
+.stetho{
+  position:absolute;
+  top:-40px;
+  right:-40px;
+  font-size:30px;
+  animation: rotate 6s linear infinite;
+}
+@keyframes rotate{
+  from{transform:rotate(0deg);}
+  to{transform:rotate(360deg);}
+}
+
+/* Button */
 button{
-padding:10px 20px;
-border:none;
-border-radius:20px;
-background:#8a2be2;
-color:white;
-cursor:pointer;
-margin-top:10px;
+  margin-top:20px;
+  padding:10px 20px;
+  background:#b497e5;
+  border:none;
+  border-radius:20px;
+  font-size:16px;
 }
-
 </style>
 </head>
 
@@ -128,62 +144,67 @@ margin-top:10px;
 
 <div class="moon"></div>
 
-<!-- Stars Generator -->
-<script>
-for(let i=0;i<60;i++){
-let star=document.createElement("div");
-star.className="star";
-star.style.top=Math.random()*100+"%";
-star.style.left=Math.random()*100+"%";
-star.style.animationDuration=(Math.random()*2+1)+"s";
-document.body.appendChild(star);
-}
-</script>
+<div class="fairy">🧚‍♀️</div>
 
-<div class="couple" onclick="startHug()">
-<div class="person boy"></div>
-<div class="person girl"></div>
-</div>
+<div class="couple" id="couple">🧑‍🤝‍🧑</div>
 
-<div class="hint">👉 Tap the couple to give a warm hug</div>
+<div class="hint">Tap the couple to hug 💞</div>
 
 <div class="diary" id="diary">
-<h3>📖 A Small Hug Promise</h3>
-<p>
-In this quiet lavender night,<br><br>
-I promise to protect your emotional heart,<br>
-respect your dreams as a doctor,<br>
-and stay beside you like the moon stays with the sky. 🌙<br><br>
-Happy Hug Day 💜
-</p>
-<button onclick="closeDiary()">Seal This Hug 🤍</button>
+  <div class="stetho">🩺</div>
+  <h3>Happy Hug Day 💜</h3>
+  <div class="promiseText">
+    I promise to protect your soft heart. 🌙<br><br>
+    I promise patience, respect & honesty.<br><br>
+    Your kindness deserves the warmest hug.<br><br>
+    Sealed with love.
+  </div>
+  <button onclick="sealHug()">Seal This Hug 💓</button>
 </div>
 
+<audio id="heartbeat" loop>
+<source src="https://www.soundjay.com/human/heartbeat-01a.mp3" type="audio/mpeg">
+</audio>
+
 <script>
-function startHug(){
-document.querySelector('.couple').classList.add('hug');
-document.querySelector('.hint').style.display='none';
 
+/* Stars */
+for(let i=0;i<40;i++){
+  let star=document.createElement("div");
+  star.className="star";
+  star.style.top=Math.random()*100+"vh";
+  star.style.left=Math.random()*100+"vw";
+  document.body.appendChild(star);
+}
+
+/* Petals */
 for(let i=0;i<20;i++){
-let heart=document.createElement("div");
-heart.className="heart";
-heart.innerHTML="💖";
-heart.style.left=(Math.random()*window.innerWidth)+"px";
-heart.style.bottom="100px";
-heart.style.animationDuration=(Math.random()*2+2)+"s";
-document.body.appendChild(heart);
-setTimeout(()=>heart.remove(),3000);
+  let petal=document.createElement("div");
+  petal.className="petal";
+  petal.innerHTML="🌸";
+  petal.style.left=Math.random()*100+"vw";
+  petal.style.animationDuration=(5+Math.random()*5)+"s";
+  document.body.appendChild(petal);
 }
 
-setTimeout(()=>{
-document.getElementById("diary").style.display="block";
-},2000);
+/* Hug Action */
+document.getElementById("couple").onclick=function(){
+  this.classList.add("hug");
+  document.querySelector(".hint").style.display="none";
+  document.getElementById("heartbeat").play();
+
+  setTimeout(()=>{
+    document.getElementById("diary").style.display="block";
+    setTimeout(()=>{
+      document.getElementById("diary").classList.add("open");
+    },200);
+  },2000);
+};
+
+function sealHug(){
+  alert("💜 Hug sealed forever 🌙");
 }
 
-function closeDiary(){
-document.getElementById("diary").innerHTML=
-"<h2>💞 Hug Sealed Forever 💞</h2><p>You are safe. You are respected. You are cherished.</p>";
-}
 </script>
 
 </body>
