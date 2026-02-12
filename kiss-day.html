@@ -58,7 +58,6 @@ color:#7a3db8;
 animation: bounceHint 1.8s infinite;
 display:none;
 }
-
 @keyframes bounceHint{
 0%{transform:translateY(0);}
 50%{transform:translateY(-6px);}
@@ -75,9 +74,7 @@ gap:60px;
 font-size:60px;
 transition:0.8s;
 }
-.hug{
-transform:scale(1.2);
-}
+.hug{ transform:scale(1.2); }
 
 .blush{
 position:absolute;
@@ -124,18 +121,6 @@ animation: burst 1s linear forwards;
 100%{opacity:0; transform:translateY(-60px) scale(1.5);}
 }
 
-/* Floating heart rain */
-.rainHeart{
-position:absolute;
-top:-20px;
-font-size:20px;
-animation: fall 4s linear infinite;
-}
-@keyframes fall{
-0%{transform:translateY(0);}
-100%{transform:translateY(110vh);}
-}
-
 /* Sparkle explosion */
 .sparkle{
 position:absolute;
@@ -177,6 +162,7 @@ animation: winFloat 3s ease forwards;
 100%{opacity:1; transform:translateY(-30px);}
 }
 
+/* Screens */
 .screen{
 position:fixed;
 top:50%;
@@ -192,6 +178,17 @@ width:85%;
 max-width:350px;
 }
 
+.finalMessage{
+font-size:22px;
+color:#b30086;
+margin-top:15px;
+animation: glowFinal 1.5s infinite alternate;
+}
+@keyframes glowFinal{
+from{text-shadow:0 0 5px #ffb3ec;}
+to{text-shadow:0 0 20px #ff66cc;}
+}
+
 button{
 margin-top:15px;
 padding:10px 20px;
@@ -203,7 +200,6 @@ font-size:16px;
 }
 
 .hidden{display:none;}
-
 </style>
 </head>
 
@@ -242,8 +238,11 @@ font-size:16px;
 </div>
 
 <div class="screen hidden" id="endScreen">
-<h2>💜 So Sweet! 💋</h2>
+<h2>💜 Game Over 💋</h2>
 <p>You collected <span id="finalScore"></span> kisses!</p>
+<div class="finalMessage">
+Happy Kiss Day Niyati 💜
+</div>
 <button onclick="restart()">Play Again</button>
 </div>
 
@@ -253,7 +252,6 @@ let time=30;
 let gameInterval;
 let kissInterval;
 let gameStarted=false;
-let rainStarted=false;
 
 function startGame(){
 document.getElementById("startScreen").classList.add("hidden");
@@ -297,7 +295,7 @@ document.body.appendChild(heart);
 setTimeout(()=>heart.remove(),1000);
 }
 
-/* Sparkle explosion */
+/* Sparkles */
 for(let i=0;i<6;i++){
 let sparkle=document.createElement("div");
 sparkle.className="sparkle";
@@ -310,43 +308,24 @@ setTimeout(()=>sparkle.remove(),1000);
 
 document.getElementById("hint").style.display="none";
 
-/* Blush */
 if(score>=10){
 document.getElementById("blush1").classList.add("showBlush");
 document.getElementById("blush2").classList.add("showBlush");
 }
 
-/* Hug */
 if(score>=15){
 document.getElementById("couple").classList.add("hug");
 }
 
-/* Unlock 20 */
 if(score>=20){
 document.getElementById("secret").style.display="block";
 document.getElementById("win").style.display="block";
 document.getElementById("moon").classList.add("moonGlow");
-
-if(!rainStarted){
-startHeartRain();
-rainStarted=true;
-}
 }
 }
 
 document.body.appendChild(kiss);
 setTimeout(()=>{kiss.remove();},5000);
-}
-
-function startHeartRain(){
-setInterval(()=>{
-let heart=document.createElement("div");
-heart.className="rainHeart";
-heart.innerHTML="💞";
-heart.style.left=Math.random()*100+"vw";
-document.body.appendChild(heart);
-setTimeout(()=>heart.remove(),4000);
-},300);
 }
 
 function endGame(){
