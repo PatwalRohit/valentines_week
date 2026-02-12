@@ -14,6 +14,19 @@ font-family:'Comic Sans MS', cursive;
 background: linear-gradient(180deg,#f3d9ff 0%,#d6b3ff 100%);
 }
 
+/* Moon */
+.moon{
+position:absolute;
+top:60px;
+right:40px;
+font-size:70px;
+transition:1.5s;
+}
+.moonGlow{
+text-shadow:0 0 20px #fff, 0 0 40px #ffccff, 0 0 60px #ff99ff;
+transform:scale(1.2);
+}
+
 /* Header */
 .header{
 position:absolute;
@@ -25,24 +38,16 @@ color:#7a3db8;
 font-weight:bold;
 }
 
-/* Score & Timer */
-.score{
+.score,.timer{
 position:absolute;
 top:50px;
-left:15px;
 font-size:18px;
 color:#6a2da8;
+display:none;
 }
+.score{left:15px;}
+.timer{right:15px;}
 
-.timer{
-position:absolute;
-top:50px;
-right:15px;
-font-size:18px;
-color:#6a2da8;
-}
-
-/* Hint */
 .hint{
 position:absolute;
 top:85px;
@@ -51,7 +56,7 @@ text-align:center;
 font-size:16px;
 color:#7a3db8;
 animation: bounceHint 1.8s infinite;
-text-shadow:0 0 8px #ffffff;
+display:none;
 }
 
 @keyframes bounceHint{
@@ -60,21 +65,6 @@ text-shadow:0 0 8px #ffffff;
 100%{transform:translateY(0);}
 }
 
-/* Arrow */
-.arrow{
-position:absolute;
-font-size:28px;
-animation: arrowBounce 1s infinite;
-z-index:5;
-}
-
-@keyframes arrowBounce{
-0%{transform:translateY(0);}
-50%{transform:translateY(6px);}
-100%{transform:translateY(0);}
-}
-
-/* Couple */
 .couple{
 position:absolute;
 bottom:40px;
@@ -83,28 +73,111 @@ display:flex;
 justify-content:center;
 gap:60px;
 font-size:60px;
+transition:0.8s;
+}
+.hug{
+transform:scale(1.2);
 }
 
-/* Kiss */
+.blush{
+position:absolute;
+bottom:20px;
+font-size:22px;
+opacity:0;
+transition:0.5s;
+}
+.leftBlush{ left:30%; }
+.rightBlush{ right:30%; }
+
+.showBlush{
+opacity:1;
+animation: glowBlush 1s infinite alternate;
+}
+@keyframes glowBlush{
+from{text-shadow:0 0 5px pink;}
+to{text-shadow:0 0 15px red;}
+}
+
 .kiss{
 position:absolute;
 font-size:30px;
 cursor:pointer;
 animation: floatUp 5s linear forwards, glow 1.5s infinite alternate;
 }
-
 @keyframes floatUp{
 0%{transform:translateY(0);}
 100%{transform:translateY(-110vh);}
 }
-
 @keyframes glow{
 from{text-shadow:0 0 5px #fff;}
 to{text-shadow:0 0 20px #ff69b4;}
 }
 
-/* Popup */
-.popup{
+/* Heart burst */
+.heart{
+position:absolute;
+font-size:18px;
+animation: burst 1s linear forwards;
+}
+@keyframes burst{
+0%{opacity:1; transform:translateY(0) scale(1);}
+100%{opacity:0; transform:translateY(-60px) scale(1.5);}
+}
+
+/* Floating heart rain */
+.rainHeart{
+position:absolute;
+top:-20px;
+font-size:20px;
+animation: fall 4s linear infinite;
+}
+@keyframes fall{
+0%{transform:translateY(0);}
+100%{transform:translateY(110vh);}
+}
+
+/* Sparkle explosion */
+.sparkle{
+position:absolute;
+font-size:14px;
+animation: sparkleAnim 1s linear forwards;
+}
+@keyframes sparkleAnim{
+0%{opacity:1; transform:scale(1);}
+100%{opacity:0; transform:scale(2) translateY(-40px);}
+}
+
+.secret{
+position:absolute;
+top:120px;
+width:100%;
+text-align:center;
+font-size:18px;
+color:#c2185b;
+display:none;
+animation: fadeIn 2s ease forwards;
+}
+@keyframes fadeIn{
+from{opacity:0;}
+to{opacity:1;}
+}
+
+.win{
+position:absolute;
+top:45%;
+width:100%;
+text-align:center;
+font-size:26px;
+color:#ff1493;
+display:none;
+animation: winFloat 3s ease forwards;
+}
+@keyframes winFloat{
+0%{opacity:0; transform:translateY(30px);}
+100%{opacity:1; transform:translateY(-30px);}
+}
+
+.screen{
 position:fixed;
 top:50%;
 left:50%;
@@ -114,8 +187,9 @@ padding:30px;
 border-radius:20px;
 box-shadow:0 10px 30px rgba(0,0,0,0.3);
 text-align:center;
-display:none;
 z-index:10;
+width:85%;
+max-width:350px;
 }
 
 button{
@@ -128,28 +202,48 @@ color:white;
 font-size:16px;
 }
 
+.hidden{display:none;}
+
 </style>
 </head>
 
 <body>
 
+<div class="moon" id="moon">🌙</div>
 <div class="header">💋 Happy Kiss Day 💜</div>
+
 <div class="score">Score: <span id="score">0</span></div>
 <div class="timer">Time: <span id="time">30</span>s</div>
 
-<div class="hint" id="hint">
-Tap the glowing flying kisses 💋
+<div class="hint" id="hint">Tap the glowing flying kisses 💋</div>
+
+<div class="secret" id="secret">
+🔓 Secret Message: You are my sweetest happiness 💖
 </div>
 
-<div class="couple">
+<div class="win" id="win">💖 You Win My Heart 💖</div>
+
+<div class="couple" id="couple">
 <div>😊</div>
 <div>😘</div>
 </div>
 
-<div class="popup" id="popup">
+<div class="blush leftBlush" id="blush1">😊</div>
+<div class="blush rightBlush" id="blush2">😊</div>
+
+<div class="screen" id="startScreen">
+<h2>💜 Kiss Catch Game 💋</h2>
+<p>
+💋 Tap flying kisses<br>
+⏳ 30 seconds<br>
+💖 Unlock surprises at 10, 15 & 20
+</p>
+<button onclick="startGame()">Start Game</button>
+</div>
+
+<div class="screen hidden" id="endScreen">
 <h2>💜 So Sweet! 💋</h2>
-<p>You collected <span id="finalScore"></span> flying kisses!</p>
-<p>Happy Kiss Day 💕</p>
+<p>You collected <span id="finalScore"></span> kisses!</p>
 <button onclick="restart()">Play Again</button>
 </div>
 
@@ -158,9 +252,17 @@ let score=0;
 let time=30;
 let gameInterval;
 let kissInterval;
-let firstKiss=true;
+let gameStarted=false;
+let rainStarted=false;
 
 function startGame(){
+document.getElementById("startScreen").classList.add("hidden");
+document.querySelector(".score").style.display="block";
+document.querySelector(".timer").style.display="block";
+document.getElementById("hint").style.display="block";
+
+gameStarted=true;
+
 gameInterval=setInterval(()=>{
 time--;
 document.getElementById("time").innerText=time;
@@ -171,56 +273,93 @@ kissInterval=setInterval(createKiss,800);
 }
 
 function createKiss(){
+if(!gameStarted) return;
+
 let kiss=document.createElement("div");
 kiss.className="kiss";
 kiss.innerHTML="💋";
 kiss.style.left=Math.random()*90+"vw";
 kiss.style.bottom="100px";
 
-document.body.appendChild(kiss);
-
-/* Arrow only for first kiss */
-if(firstKiss){
-let arrow=document.createElement("div");
-arrow.className="arrow";
-arrow.innerHTML="⬇️";
-arrow.style.left=kiss.style.left;
-arrow.style.bottom="150px";
-arrow.id="arrow";
-document.body.appendChild(arrow);
-}
-
-kiss.onclick=function(){
+kiss.onclick=function(e){
 score++;
 document.getElementById("score").innerText=score;
 kiss.remove();
 
-/* Remove hint & arrow after first tap */
-if(firstKiss){
-firstKiss=false;
-let hint=document.getElementById("hint");
-if(hint) hint.style.display="none";
+/* Heart burst */
+for(let i=0;i<6;i++){
+let heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="💜";
+heart.style.left=e.clientX+(Math.random()*40-20)+"px";
+heart.style.top=e.clientY+"px";
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),1000);
+}
 
-let arrow=document.getElementById("arrow");
-if(arrow) arrow.remove();
+/* Sparkle explosion */
+for(let i=0;i<6;i++){
+let sparkle=document.createElement("div");
+sparkle.className="sparkle";
+sparkle.innerHTML="✨";
+sparkle.style.left=e.clientX+(Math.random()*40-20)+"px";
+sparkle.style.top=e.clientY+"px";
+document.body.appendChild(sparkle);
+setTimeout(()=>sparkle.remove(),1000);
+}
+
+document.getElementById("hint").style.display="none";
+
+/* Blush */
+if(score>=10){
+document.getElementById("blush1").classList.add("showBlush");
+document.getElementById("blush2").classList.add("showBlush");
+}
+
+/* Hug */
+if(score>=15){
+document.getElementById("couple").classList.add("hug");
+}
+
+/* Unlock 20 */
+if(score>=20){
+document.getElementById("secret").style.display="block";
+document.getElementById("win").style.display="block";
+document.getElementById("moon").classList.add("moonGlow");
+
+if(!rainStarted){
+startHeartRain();
+rainStarted=true;
 }
 }
+}
 
+document.body.appendChild(kiss);
 setTimeout(()=>{kiss.remove();},5000);
+}
+
+function startHeartRain(){
+setInterval(()=>{
+let heart=document.createElement("div");
+heart.className="rainHeart";
+heart.innerHTML="💞";
+heart.style.left=Math.random()*100+"vw";
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),4000);
+},300);
 }
 
 function endGame(){
 clearInterval(gameInterval);
 clearInterval(kissInterval);
+gameStarted=false;
 document.getElementById("finalScore").innerText=score;
-document.getElementById("popup").style.display="block";
+document.getElementById("endScreen").classList.remove("hidden");
 }
 
 function restart(){
 location.reload();
 }
-
-startGame();
 </script>
 
 </body>
