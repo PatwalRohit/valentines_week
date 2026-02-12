@@ -5,14 +5,7 @@
 <title>Happy Kiss Day 💋</title>
 
 <style>
-
-/* Fix white background issue */
-html{
-height:100%;
-background: linear-gradient(180deg,#f3d9ff 0%,#d6b3ff 100%);
-}
-
-body{
+html,body{
 margin:0;
 padding:0;
 height:100%;
@@ -32,7 +25,7 @@ color:#7a3db8;
 font-weight:bold;
 }
 
-/* Score */
+/* Score & Timer */
 .score{
 position:absolute;
 top:50px;
@@ -41,13 +34,44 @@ font-size:18px;
 color:#6a2da8;
 }
 
-/* Timer */
 .timer{
 position:absolute;
 top:50px;
 right:15px;
 font-size:18px;
 color:#6a2da8;
+}
+
+/* Hint */
+.hint{
+position:absolute;
+top:85px;
+width:100%;
+text-align:center;
+font-size:16px;
+color:#7a3db8;
+animation: bounceHint 1.8s infinite;
+text-shadow:0 0 8px #ffffff;
+}
+
+@keyframes bounceHint{
+0%{transform:translateY(0);}
+50%{transform:translateY(-6px);}
+100%{transform:translateY(0);}
+}
+
+/* Arrow */
+.arrow{
+position:absolute;
+font-size:28px;
+animation: arrowBounce 1s infinite;
+z-index:5;
+}
+
+@keyframes arrowBounce{
+0%{transform:translateY(0);}
+50%{transform:translateY(6px);}
+100%{transform:translateY(0);}
 }
 
 /* Couple */
@@ -61,17 +85,22 @@ gap:60px;
 font-size:60px;
 }
 
-/* Floating kiss */
+/* Kiss */
 .kiss{
 position:absolute;
 font-size:30px;
 cursor:pointer;
-animation: floatUp 5s linear forwards;
+animation: floatUp 5s linear forwards, glow 1.5s infinite alternate;
 }
 
 @keyframes floatUp{
 0%{transform:translateY(0);}
 100%{transform:translateY(-110vh);}
+}
+
+@keyframes glow{
+from{text-shadow:0 0 5px #fff;}
+to{text-shadow:0 0 20px #ff69b4;}
 }
 
 /* Popup */
@@ -108,6 +137,10 @@ font-size:16px;
 <div class="score">Score: <span id="score">0</span></div>
 <div class="timer">Time: <span id="time">30</span>s</div>
 
+<div class="hint" id="hint">
+Tap the glowing flying kisses 💋
+</div>
+
 <div class="couple">
 <div>😊</div>
 <div>😘</div>
@@ -125,6 +158,7 @@ let score=0;
 let time=30;
 let gameInterval;
 let kissInterval;
+let firstKiss=true;
 
 function startGame(){
 gameInterval=setInterval(()=>{
@@ -143,13 +177,35 @@ kiss.innerHTML="💋";
 kiss.style.left=Math.random()*90+"vw";
 kiss.style.bottom="100px";
 
+document.body.appendChild(kiss);
+
+/* Arrow only for first kiss */
+if(firstKiss){
+let arrow=document.createElement("div");
+arrow.className="arrow";
+arrow.innerHTML="⬇️";
+arrow.style.left=kiss.style.left;
+arrow.style.bottom="150px";
+arrow.id="arrow";
+document.body.appendChild(arrow);
+}
+
 kiss.onclick=function(){
 score++;
 document.getElementById("score").innerText=score;
 kiss.remove();
+
+/* Remove hint & arrow after first tap */
+if(firstKiss){
+firstKiss=false;
+let hint=document.getElementById("hint");
+if(hint) hint.style.display="none";
+
+let arrow=document.getElementById("arrow");
+if(arrow) arrow.remove();
+}
 }
 
-document.body.appendChild(kiss);
 setTimeout(()=>{kiss.remove();},5000);
 }
 
