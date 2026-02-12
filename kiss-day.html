@@ -5,12 +5,20 @@
 <title>Happy Kiss Day 💋</title>
 
 <style>
-html,body{
+
+/* Fix white background issue */
+html{
+height:100%;
+background: linear-gradient(180deg,#f3d9ff 0%,#d6b3ff 100%);
+}
+
+body{
 margin:0;
 padding:0;
+height:100%;
 overflow:hidden;
 font-family:'Comic Sans MS', cursive;
-background: linear-gradient(to bottom,#f3d9ff,#d6b3ff);
+background: linear-gradient(180deg,#f3d9ff 0%,#d6b3ff 100%);
 }
 
 /* Header */
@@ -53,7 +61,7 @@ gap:60px;
 font-size:60px;
 }
 
-/* Flying Kiss */
+/* Floating kiss */
 .kiss{
 position:absolute;
 font-size:30px;
@@ -66,7 +74,7 @@ animation: floatUp 5s linear forwards;
 100%{transform:translateY(-110vh);}
 }
 
-/* End Popup */
+/* Popup */
 .popup{
 position:fixed;
 top:50%;
@@ -78,6 +86,7 @@ border-radius:20px;
 box-shadow:0 10px 30px rgba(0,0,0,0.3);
 text-align:center;
 display:none;
+z-index:10;
 }
 
 button{
@@ -121,10 +130,7 @@ function startGame(){
 gameInterval=setInterval(()=>{
 time--;
 document.getElementById("time").innerText=time;
-
-if(time<=0){
-endGame();
-}
+if(time<=0){ endGame(); }
 },1000);
 
 kissInterval=setInterval(createKiss,800);
@@ -144,7 +150,6 @@ kiss.remove();
 }
 
 document.body.appendChild(kiss);
-
 setTimeout(()=>{kiss.remove();},5000);
 }
 
