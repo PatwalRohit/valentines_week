@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Kiss Day 💋</title>
+
+<style>
+html,body{
+margin:0;
+padding:0;
+overflow:hidden;
+font-family:'Comic Sans MS', cursive;
+background: linear-gradient(to bottom,#f3d9ff,#d6b3ff);
+}
+
+/* Header */
+.header{
+position:absolute;
+top:15px;
+width:100%;
+text-align:center;
+font-size:22px;
+color:#7a3db8;
+font-weight:bold;
+}
+
+/* Score */
+.score{
+position:absolute;
+top:50px;
+left:15px;
+font-size:18px;
+color:#6a2da8;
+}
+
+/* Timer */
+.timer{
+position:absolute;
+top:50px;
+right:15px;
+font-size:18px;
+color:#6a2da8;
+}
+
+/* Couple */
+.couple{
+position:absolute;
+bottom:40px;
+width:100%;
+display:flex;
+justify-content:center;
+gap:60px;
+font-size:60px;
+}
+
+/* Flying Kiss */
+.kiss{
+position:absolute;
+font-size:30px;
+cursor:pointer;
+animation: floatUp 5s linear forwards;
+}
+
+@keyframes floatUp{
+0%{transform:translateY(0);}
+100%{transform:translateY(-110vh);}
+}
+
+/* End Popup */
+.popup{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:white;
+padding:30px;
+border-radius:20px;
+box-shadow:0 10px 30px rgba(0,0,0,0.3);
+text-align:center;
+display:none;
+}
+
+button{
+margin-top:15px;
+padding:10px 20px;
+border:none;
+border-radius:20px;
+background:#b57edc;
+color:white;
+font-size:16px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">💋 Happy Kiss Day 💜</div>
+<div class="score">Score: <span id="score">0</span></div>
+<div class="timer">Time: <span id="time">30</span>s</div>
+
+<div class="couple">
+<div>😊</div>
+<div>😘</div>
+</div>
+
+<div class="popup" id="popup">
+<h2>💜 So Sweet! 💋</h2>
+<p>You collected <span id="finalScore"></span> flying kisses!</p>
+<p>Happy Kiss Day 💕</p>
+<button onclick="restart()">Play Again</button>
+</div>
+
+<script>
+let score=0;
+let time=30;
+let gameInterval;
+let kissInterval;
+
+function startGame(){
+gameInterval=setInterval(()=>{
+time--;
+document.getElementById("time").innerText=time;
+
+if(time<=0){
+endGame();
+}
+},1000);
+
+kissInterval=setInterval(createKiss,800);
+}
+
+function createKiss(){
+let kiss=document.createElement("div");
+kiss.className="kiss";
+kiss.innerHTML="💋";
+kiss.style.left=Math.random()*90+"vw";
+kiss.style.bottom="100px";
+
+kiss.onclick=function(){
+score++;
+document.getElementById("score").innerText=score;
+kiss.remove();
+}
+
+document.body.appendChild(kiss);
+
+setTimeout(()=>{kiss.remove();},5000);
+}
+
+function endGame(){
+clearInterval(gameInterval);
+clearInterval(kissInterval);
+document.getElementById("finalScore").innerText=score;
+document.getElementById("popup").style.display="block";
+}
+
+function restart(){
+location.reload();
+}
+
+startGame();
+</script>
+
+</body>
+</html>
