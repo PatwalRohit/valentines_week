@@ -73,6 +73,7 @@ border-radius:25px;
 box-shadow:0 10px 40px rgba(0,0,0,0.2);
 width:85%;
 max-width:350px;
+  padding: 40px 30px 35px;
 }
 
 /* Question */
@@ -96,6 +97,7 @@ border-radius:30px;
 font-size:18px;
 cursor:pointer;
 transition:0.3s;
+  
 }
 
 #yesBtn{
@@ -168,6 +170,11 @@ animation: sparkleAnim 2s linear infinite;
 0%{opacity:1; transform:translateY(0);}
 100%{opacity:0; transform:translateY(-80px);}
 }
+  .row
+  {display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 25px;}
 </style>
 </head>
 
@@ -193,7 +200,7 @@ document.body.appendChild(star);
 <!-- Proposal Card -->
 <div class="card" id="card">
 <div class="question">
-💜 Will You Be My Valentine Niyati? 💜
+💜 Will You Be My Valentine,<br> Niyati? 💜
 </div>
 
 <p style="color:#6a2da8;font-size:15px;">
@@ -201,9 +208,10 @@ For the sweetest doctor 👩‍⚕️✨<br>
 Who loves fairy tales, moon & stars 🌙⭐<br>
 And writes secrets in her diary 📖💜
 </p>
-
+<div class="row">
 <button id="yesBtn" onclick="acceptLove()">Yes 💖</button>
 <button id="noBtn" onclick="growYes()">No 🙈</button>
+  </div>
 </div>
 
 <!-- Yay Screen -->
