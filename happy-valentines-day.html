@@ -82,6 +82,11 @@ font-size:24px;
 color:#7a3db8;
 margin-bottom:20px;
 animation: glow 2s infinite alternate;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 25px;
+  flex-direction:column;
 }
 @keyframes glow{
 from{text-shadow:0 0 5px #d9b3ff;}
@@ -200,7 +205,9 @@ document.body.appendChild(star);
 <!-- Proposal Card -->
 <div class="card" id="card">
 <div class="question">
-🧞‍♂️ Will You Be My Valentine,🧚<br>💜 Niyati? 💜
+  <div>🧞‍♂️ Will You Be My Valentine?🧚</div>
+  <div>💜 Niyati 💜</div>
+<br>
 </div>
 
 <p style="color:#6a2da8;font-size:15px;" class="msg">
