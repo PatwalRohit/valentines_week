@@ -129,24 +129,33 @@ animation: jump 1s infinite;
 }
 
 .yay{
-font-size:40px;
-color:#ff1493;
-animation: pop 1s ease infinite alternate;
+font-size: 48px;
+  font-weight: bold;
+  color: gold;
+  text-shadow: 
+    0 0 10px rgba(255, 215, 0, 0.9),
+    0 0 20px rgba(255, 215, 0, 0.7),
+    0 0 30px rgba(255, 215, 0, 0.6);
+  animation: yayPop 1s ease forwards;
 }
 @keyframes pop{
-from{transform:scale(1);}
-to{transform:scale(1.2);}
+ 0% { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1.2); opacity: 1; }
 }
 
 .loveMsg{
-font-size:26px;
-color:#8a2be2;
-margin-top:15px;
-animation: glowLove 2s infinite alternate;
+font-size: 32px;
+  font-weight: bold;
+  color: #e6ccff;
+  text-shadow:
+    0 0 8px rgba(230, 204, 255, 0.9),
+    0 0 18px rgba(200, 150, 255, 0.7),
+    0 0 28px rgba(170, 120, 255, 0.6);
+  animation: fadeInLove 2s ease forwards;
 }
 @keyframes glowLove{
-from{text-shadow:0 0 10px #e6ccff;}
-to{text-shadow:0 0 25px #cc99ff;}
+0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
 /* Diary sparkle */
