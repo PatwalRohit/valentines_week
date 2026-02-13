@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will You Be My Valentine? 💜</title>
+
+<style>
+body{
+margin:0;
+padding:0;
+overflow:hidden;
+font-family:'Comic Sans MS', cursive;
+background: linear-gradient(180deg,#e6ccff,#f3e6ff);
+text-align:center;
+}
+
+/* Stars background */
+.star{
+position:absolute;
+color:white;
+animation: twinkle 2s infinite alternate;
+font-size:14px;
+}
+@keyframes twinkle{
+from{opacity:0.3;}
+to{opacity:1;}
+}
+
+/* Moon */
+.moon{
+position:absolute;
+top:40px;
+right:40px;
+font-size:70px;
+text-shadow:0 0 20px #fff,0 0 40px #d9b3ff;
+}
+
+/* Fairy */
+.fairy{
+position:absolute;
+top:120px;
+left:20px;
+font-size:50px;
+animation: floatFairy 4s ease-in-out infinite;
+}
+@keyframes floatFairy{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-20px);}
+}
+
+/* Shinchan cute vibe */
+.shinchan{
+position:absolute;
+bottom:20px;
+left:20px;
+font-size:45px;
+animation: bounce 2s infinite;
+}
+@keyframes bounce{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-10px);}
+}
+
+/* Main Card */
+.card{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:white;
+padding:30px;
+border-radius:25px;
+box-shadow:0 10px 40px rgba(0,0,0,0.2);
+width:85%;
+max-width:350px;
+}
+
+/* Question */
+.question{
+font-size:24px;
+color:#7a3db8;
+margin-bottom:20px;
+animation: glow 2s infinite alternate;
+}
+@keyframes glow{
+from{text-shadow:0 0 5px #d9b3ff;}
+to{text-shadow:0 0 20px #b366ff;}
+}
+
+/* Buttons */
+button{
+padding:12px 25px;
+margin:10px;
+border:none;
+border-radius:30px;
+font-size:18px;
+cursor:pointer;
+transition:0.3s;
+}
+
+#yesBtn{
+background:#b57edc;
+color:white;
+}
+
+#noBtn{
+background:#ff99cc;
+color:white;
+}
+
+/* Yay Screen */
+#yayScreen{
+display:none;
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+text-align:center;
+}
+
+/* Happy man animation */
+.man{
+font-size:80px;
+animation: jump 1s infinite;
+}
+@keyframes jump{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-20px);}
+}
+
+.yay{
+font-size:40px;
+color:#ff1493;
+animation: pop 1s ease infinite alternate;
+}
+@keyframes pop{
+from{transform:scale(1);}
+to{transform:scale(1.2);}
+}
+
+.loveMsg{
+font-size:26px;
+color:#8a2be2;
+margin-top:15px;
+animation: glowLove 2s infinite alternate;
+}
+@keyframes glowLove{
+from{text-shadow:0 0 10px #e6ccff;}
+to{text-shadow:0 0 25px #cc99ff;}
+}
+
+/* Diary sparkle */
+.sparkle{
+position:absolute;
+font-size:18px;
+animation: sparkleAnim 2s linear infinite;
+}
+@keyframes sparkleAnim{
+0%{opacity:1; transform:translateY(0);}
+100%{opacity:0; transform:translateY(-80px);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="moon">🌙</div>
+<div class="fairy">🧚‍♀️</div>
+<div class="shinchan">🧒💗</div>
+
+<!-- Stars -->
+<script>
+for(let i=0;i<30;i++){
+let star=document.createElement("div");
+star.className="star";
+star.innerHTML="✨";
+star.style.left=Math.random()*100+"vw";
+star.style.top=Math.random()*100+"vh";
+star.style.animationDuration=(1+Math.random()*2)+"s";
+document.body.appendChild(star);
+}
+</script>
+
+<!-- Proposal Card -->
+<div class="card" id="card">
+<div class="question">
+💜 Will You Be My Valentine Niyati? 💜
+</div>
+
+<p style="color:#6a2da8;font-size:15px;">
+For the sweetest doctor 👩‍⚕️✨<br>
+Who loves fairy tales, moon & stars 🌙⭐<br>
+And writes secrets in her diary 📖💜
+</p>
+
+<button id="yesBtn" onclick="acceptLove()">Yes 💖</button>
+<button id="noBtn" onclick="growYes()">No 🙈</button>
+</div>
+
+<!-- Yay Screen -->
+<div id="yayScreen">
+<div class="man">🕺</div>
+<div class="yay">YAYYYY!!! 🎉💜</div>
+<div class="loveMsg">I Love You Niyati 💜</div>
+</div>
+
+<script>
+let yesSize=18;
+
+function growYes(){
+yesSize+=6;
+let yesBtn=document.getElementById("yesBtn");
+yesBtn.style.fontSize=yesSize+"px";
+yesBtn.style.transform="scale("+(1+yesSize/50)+")";
+}
+
+function acceptLove(){
+document.getElementById("card").style.display="none";
+document.getElementById("yayScreen").style.display="block";
+createSparkles();
+}
+
+function createSparkles(){
+setInterval(()=>{
+let sp=document.createElement("div");
+sp.className="sparkle";
+sp.innerHTML="💜";
+sp.style.left=Math.random()*100+"vw";
+sp.style.top="90vh";
+document.body.appendChild(sp);
+setTimeout(()=>sp.remove(),2000);
+},300);
+}
+</script>
+
+</body>
+</html>
