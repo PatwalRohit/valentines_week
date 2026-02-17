@@ -9,27 +9,58 @@
     margin: 0;
     overflow: hidden;
     font-family: "Segoe UI", sans-serif;
-    background: linear-gradient(180deg, #e6dcff, #f5eaff);
-    height: 100vh;
+    background: linear-gradient(180deg, #e9ddff, #f7f0ff);
   }
 
   .moon {
     position: absolute;
-    top: 40px;
-    right: 40px;
-    font-size: 40px;
+    top: 20px;
+    right: 25px;
+    font-size: 36px;
     animation: glow 2s infinite alternate;
   }
 
   @keyframes glow {
     from { filter: drop-shadow(0 0 5px #fff); }
-    to { filter: drop-shadow(0 0 15px #fff); }
+    to { filter: drop-shadow(0 0 18px #fff); }
   }
 
-  #gameArea {
-    position: relative;
-    width: 100%;
-    height: 100%;
+  #startScreen {
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.95);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 10;
+  }
+
+  #startScreen h2 {
+    color: #7b5cff;
+    margin-bottom: 10px;
+  }
+
+  #startBtn {
+    background: #7b5cff;
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  #score {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: white;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 14px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
   }
 
   .item {
@@ -44,16 +75,27 @@
     to { transform: translateY(-10vh) scale(1.2); opacity: 0; }
   }
 
+  .sparkle {
+    position: absolute;
+    font-size: 20px;
+    pointer-events: none;
+    animation: sparkle 0.6s ease forwards;
+  }
+
+  @keyframes sparkle {
+    to { transform: translateY(-20px) scale(1.5); opacity: 0; }
+  }
+
   #finalCard {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0.5);
     background: white;
-    padding: 25px 30px;
+    padding: 30px 35px;
     border-radius: 25px;
     text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
     display: none;
     animation: pop 0.6s ease forwards;
   }
@@ -62,59 +104,84 @@
     to { transform: translate(-50%, -50%) scale(1); }
   }
 
-  .lavender {
+  .title {
     color: #7b5cff;
-    font-size: 26px;
-    margin-bottom: 10px;
+    font-size: 28px;
+    margin-bottom: 8px;
   }
 
   .subtitle {
     color: #555;
-    font-size: 15px;
+    font-size: 14px;
   }
 </style>
 </head>
 <body>
 
 <div class="moon">🌙</div>
+<div id="score">Collected: 0 / 7</div>
+
+<div id="startScreen">
+  <h2>Catch the magical things 💜</h2>
+  <p>Tap diary 📖, fairy 🧚, moon 🌙 & princess 👸 items</p>
+  <button id="startBtn">Start ✨</button>
+</div>
+
 <div id="gameArea"></div>
 
 <div id="finalCard">
-  <div class="lavender">Sorry 💜</div>
-  <div class="subtitle">From someone who cares 🌙</div>
+  <div class="title">Sorry 💜</div>
+  <div class="subtitle">For my favorite doctor 🌙📖🧚</div>
 </div>
 
 <script>
   const items = ["🧚", "📖", "👸", "🌙", "💜"];
   const gameArea = document.getElementById("gameArea");
   const finalCard = document.getElementById("finalCard");
+  const scoreBox = document.getElementById("score");
+  const startScreen = document.getElementById("startScreen");
 
   let collected = 0;
-  const target = 8;
+  const target = 7;
+  let gameStarted = false;
+
+  document.getElementById("startBtn").onclick = () => {
+    startScreen.style.display = "none";
+    gameStarted = true;
+  };
 
   function createItem() {
+    if (!gameStarted || collected >= target) return;
+
     const el = document.createElement("div");
     el.className = "item";
     el.innerHTML = items[Math.floor(Math.random() * items.length)];
     el.style.left = Math.random() * 90 + "vw";
     el.style.animationDuration = (4 + Math.random() * 3) + "s";
 
-    el.onclick = () => {
+    el.onclick = (e) => {
+      const sparkle = document.createElement("div");
+      sparkle.className = "sparkle";
+      sparkle.innerHTML = "✨";
+      sparkle.style.left = e.clientX + "px";
+      sparkle.style.top = e.clientY + "px";
+      document.body.appendChild(sparkle);
+      setTimeout(() => sparkle.remove(), 600);
+
       el.remove();
       collected++;
+      scoreBox.innerText = `Collected: ${collected} / ${target}`;
+
       if (collected >= target) {
         finalCard.style.display = "block";
       }
     };
 
     gameArea.appendChild(el);
-
     setTimeout(() => el.remove(), 7000);
   }
 
-  setInterval(() => {
-    if (collected < target) createItem();
-  }, 800);
+  setInterval(createItem, 900);
 </script>
 
 </body>
